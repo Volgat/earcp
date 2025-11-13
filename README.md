@@ -1,16 +1,18 @@
 # EARCP: Ensemble Auto-Régulé par Cohérence et Performance
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Disclosure Date](https://img.shields.io/badge/Prior%20Art%20Date-Nov%2013%2C%202025-green.svg)](https://github.com/mikeamega/earcp)
+[![Disclosure Date](https://img.shields.io/badge/Prior%20Art%20Date-Nov%2013%2C%202025-green.svg)](https://github.com/Volgat/earcp)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)]()
 
 **A Self-Regulating Coherence-Aware Ensemble Architecture for Sequential Decision Making**
 
 **Author:** Mike Amega  
-**Affiliation:** Independent Researcher, Windsor, Ontario, Canada  
-**Contact:** contact@mikeamega.ca  
+**Affiliation:** Independent Researcher, 
+**Contact:** info@amewebstudio.com  
+**Linkdin:** https://www.linkedin.com/in/mike-amega-486329184/   
 **Disclosure Date:** November 13, 2025  
+
 
 ---
 
@@ -180,7 +182,7 @@ If you use EARCP in academic work, please cite:
   author={Amega, Mike},
   journal={arXiv preprint},
   year={2025},
-  url={https://github.com/mikeamega/earcp},
+  url={https://github.com/Volgat/earcp},
   note={Prior art established November 13, 2025}
 }
 ```
@@ -195,7 +197,7 @@ For technical implementations:
   author={Amega, Mike},
   institution={Independent Research},
   year={2025},
-  url={https://github.com/mikeamega/earcp},
+  url={https://github.com/Volgat/earcp},
   note={Defensive publication for IP protection}
 }
 ```
@@ -242,7 +244,7 @@ This repository constitutes a defensive publication establishing prior art for:
 All uses must include:
 ```
 This work uses EARCP (Ensemble Auto-Régulé par Cohérence et Performance)
-developed by Mike Amega (2025). See: https://github.com/mikeamega/earcp
+developed by Mike Amega (2025). See: https://github.com/Volgat/earcp
 ```
 
 ---
@@ -295,12 +297,12 @@ Contributors will be acknowledged in:
 ## 📧 Contact
 
 **Mike Amega**  
-Email: contact@mikeamega.ca  
-Location: Windsor, Ontario, Canada  
-GitHub: [@mikeamega](https://github.com/mikeamega)
+Email: mikeamega@yahoo.fr 
+Location:  Ontario, Canada  
+GitHub: [@mikeamega](https://github.com/Volgat)
 
 ### For Licensing Inquiries
-Email: contact@mikeamega.ca  
+Email: info@amewebstudio.com
 Subject: "EARCP Commercial License Inquiry"
 
 ### For Research Collaboration
@@ -368,5 +370,5 @@ This repository includes the following for complete IP protection:
 ---
 
 *Last Updated: November 13, 2025*  
-*Repository: https://github.com/mikeamega/earcp*  
+*Repository: https://github.com/Volgat/earcp*  
 *Prior Art Date: November 13, 2025*
