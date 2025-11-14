@@ -4,7 +4,7 @@
 
 La bibliothèque Python est sur la branche:
 ```
-claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+earcp-lib
 ```
 
 ## 🚀 Installation Simple (3 Étapes)
@@ -17,7 +17,7 @@ cd earcp
 
 ### Étape 2: Basculer sur la bonne branche
 ```bash
-git checkout claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+git checkout earcp-lib
 ```
 
 ### Étape 3: Installer
@@ -61,7 +61,7 @@ print("Poids finaux:", ensemble.get_weights())
 ## 📦 Installation Directe (Alternative)
 
 ```bash
-pip install git+https://github.com/Volgat/earcp.git@claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+pip install git+https://github.com/Volgat/earcp.git@earcp-lib
 ```
 
 ## 🔧 Résolution de Problèmes
@@ -70,7 +70,7 @@ pip install git+https://github.com/Volgat/earcp.git@claude/python-architecture-l
 **Cause**: Vous êtes sur la mauvaise branche
 **Solution**:
 ```bash
-git checkout claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+git checkout earcp-lib
 ```
 
 ### Erreur: "No module named 'numpy'"
