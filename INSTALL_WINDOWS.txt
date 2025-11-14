@@ -17,7 +17,7 @@ MÉTHODE 1: INSTALLATION LOCALE (RECOMMANDÉE)
    cd earcp
 
 5. Basculez sur la BONNE branche (IMPORTANT!):
-   git checkout claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+   git checkout earcp-lib
 
 6. Vérifiez que setup.py existe:
    dir setup.py
@@ -37,7 +37,7 @@ MÉTHODE 2: INSTALLATION DIRECTE (UNE SEULE LIGNE)
 
 Dans PowerShell ou CMD:
 
-pip install git+https://github.com/Volgat/earcp.git@claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+pip install git+https://github.com/Volgat/earcp.git@earcp-lib
 
 Puis testez:
 python -c "from earcp import EARCP; print('OK!')"
@@ -47,7 +47,7 @@ python -c "from earcp import EARCP; print('OK!')"
 COPIER-COLLER RAPIDE (Toutes les étapes en UNE commande)
 ───────────────────────────────────────────────────────────────────────────────
 
-cd C:\Users\mikea\Downloads && git clone https://github.com/Volgat/earcp.git && cd earcp && git checkout claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS && pip install -e .
+cd C:\Users\mikea\Downloads && git clone https://github.com/Volgat/earcp.git && cd earcp && git checkout earcp-lib && pip install -e .
 
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -91,7 +91,7 @@ RÉSOLUTION DE PROBLÈMES
 PROBLÈME: "does not appear to be a Python project"
 CAUSE: Vous êtes sur la mauvaise branche
 SOLUTION:
-   git checkout claude/python-architecture-library-011CV5KkHh56MP82m3ede8RS
+   git checkout earcp-lib
    dir setup.py
    pip install -e .
 
