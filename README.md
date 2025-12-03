@@ -257,7 +257,7 @@ developed by Mike Amega (2025). See: https://github.com/Volgat/earcp
 - [x] Theoretical guarantees proven
 - [x] Comprehensive benchmarking completed
 - [x] Production-grade code with safeguards
-- [ ] PyPI package publication
+- [x] PyPI package publication
 - [ ] Academic paper submission to conference
 - [ ] Extended documentation and tutorials
 - [ ] Community extensions and contributions
