@@ -573,7 +573,7 @@ A review of existing literature was conducted across:
 
 **For licensing inquiries:**  
 Mike Amega  
-contact@mikeamega.ca  
+mikeamega@yahoo.fr
 
 **For patent collaboration:**  
 Available to discuss co-filing with industry partners or research institutions.
