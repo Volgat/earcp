@@ -2,6 +2,7 @@
 Setup script for EARCP library.
 
 Copyright (c) 2025 Mike Amega. All rights reserved.
+Licensed under Business Source License 1.1
 """
 
 from setuptools import setup, find_packages
@@ -29,29 +30,35 @@ setup(
     version=get_version(),
     author='Mike Amega',
     author_email='info@amewebstudio.com',
-    description='EARCP: Ensemble Auto-Régulé par Cohérence et Performance',
+    description='EARCP: Self-Regulating Coherence and Performance-Aware Ensemble',
     long_description=read_file('README.md'),
     long_description_content_type='text/markdown',
     url='https://github.com/Volgat/earcp',
     project_urls={
         'Documentation': 'https://github.com/Volgat/earcp/blob/main/docs/USAGE.md',
-        'Source': 'https://github.com/Volgat/earcp',
+        'Source': 'https://github.com/Volgat/earcp/tree/earcp-lib',
         'Bug Reports': 'https://github.com/Volgat/earcp/issues',
+        'License': 'https://github.com/Volgat/earcp/blob/main/LICENSE.md',
+        'Commercial Licensing': 'mailto:info@amewebstudio.com',
     },
     packages=find_packages(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'Intended Audience :: Developers',
+        'Intended Audience :: Financial and Insurance Industry',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
+        'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'License :: OSI Approved :: MIT License',
+        'License :: Other/Proprietary License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Operating System :: OS Independent',
+        'Natural Language :: English',
     ],
     keywords=[
         'machine-learning',
@@ -62,6 +69,10 @@ setup(
         'expert-weighting',
         'coherence',
         'performance',
+        'sequential-decision-making',
+        'dynamic-weighting',
+        'trading',
+        'forecasting',
     ],
     python_requires='>=3.8',
     install_requires=[
@@ -92,5 +103,6 @@ setup(
     },
     include_package_data=True,
     zip_safe=False,
-    license='MIT',
+    license='Business Source License 1.1',
+    license_files=['LICENSE.md'],
 )
