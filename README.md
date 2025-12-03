@@ -1,6 +1,6 @@
 # EARCP: Ensemble Auto-Régulé par Cohérence et Performance
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-BSL%201.1-blue.svg)](LICENSE.md)
 [![Disclosure Date](https://img.shields.io/badge/Prior%20Art%20Date-Nov%2013%2C%202025-green.svg)](https://github.com/Volgat/earcp)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success.svg)]()
@@ -8,11 +8,11 @@
 **A Self-Regulating Coherence-Aware Ensemble Architecture for Sequential Decision Making**
 
 **Author:** Mike Amega  
-**Affiliation:** Independent Researcher, 
+**Affiliation:** Independent Researcher  
 **Contact:** info@amewebstudio.com  
-**Linkdin:** https://www.linkedin.com/in/mike-amega-486329184/   
-**Disclosure Date:** November 13, 2025  
-
+**private:** mikeamega910@gmail.com
+**LinkedIn:** https://www.linkedin.com/in/mike-amega-486329184/  
+**Disclosure Date:** November 13, 2025
 
 ---
 
@@ -29,6 +29,44 @@ EARCP is a novel ensemble learning architecture that dynamically weights heterog
 - ✅ **Theoretically Grounded:** Provable O(√(T log M)) regret bounds
 - ✅ **Practical:** Stable implementation with multiple safeguards
 - ✅ **General-Purpose:** Applicable to any sequential prediction task
+
+---
+
+## 📦 Repository Structure
+
+This repository has two branches:
+
+- **`main` (earcp)**: Documentation, academic papers, research materials, and IP protection documents
+- **`earcp-lib`**: Python library implementation for installation and use in your projects
+
+---
+
+## 🚀 Installation
+
+### From GitHub (Recommended)
+
+Install directly from the `earcp-lib` branch:
+
+```bash
+pip install git+https://github.com/Volgat/earcp.git@earcp-lib
+```
+
+### Local Development
+
+Clone and install locally:
+
+```bash
+# Clone the library branch
+git clone -b earcp-lib https://github.com/Volgat/earcp.git
+cd earcp
+pip install -e .
+```
+
+### From PyPI (Coming Soon)
+
+```bash
+pip install earcp
+```
 
 ---
 
@@ -51,13 +89,7 @@ This repository contains complete documentation for academic recognition and IP 
 
 ---
 
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-pip install earcp
-```
+## 💻 Quick Start
 
 ### Basic Usage
 
@@ -170,6 +202,40 @@ class ExpertModel:
 
 ---
 
+## 📜 License
+
+EARCP is released under the **Business Source License 1.1**.
+
+### ✅ Free Use
+
+You can use EARCP **for free** if:
+- 🎓 **Academic research and education**
+- 💻 **Personal and open-source projects**
+- 🏢 **Internal business use** where your organization's total revenue is less than **USD $100,000 per year**
+
+### 💼 Commercial Use
+
+Organizations with revenue exceeding **$100,000/year** or those wishing to:
+- Embed EARCP in commercial products
+- Offer EARCP as a hosted service (SaaS)
+- Redistribute EARCP commercially
+
+...must obtain a **commercial license**.
+
+**📧 Contact for Commercial Licensing:**
+- **Email:** info@amewebstudio.com
+- **Subject:** "EARCP Commercial License Inquiry"
+
+### 🔓 Future License
+
+After **November 13, 2029** (four years from publication), EARCP will automatically be released under the **Apache 2.0 license**, making it freely available for all uses.
+
+### 📄 Full License Terms
+
+For complete license terms, see [LICENSE.md](LICENSE.md)
+
+---
+
 ## 📖 Citation
 
 ### Academic Citation
@@ -198,7 +264,7 @@ For technical implementations:
   institution={Independent Research},
   year={2025},
   url={https://github.com/Volgat/earcp},
-  note={Defensive publication for IP protection}
+  note={Business Source License 1.1}
 }
 ```
 
@@ -222,22 +288,7 @@ This repository constitutes a defensive publication establishing prior art for:
 - Specific implementation details and optimizations
 - Extension mechanisms and variations
 
-**Legal Effect:** This public disclosure prevents third-party patent claims on disclosed inventions while preserving the author's rights to commercialize, license, or patent this technology.
-
-### License Options
-
-#### For Academic and Research Use
-- **License:** MIT License
-- **Conditions:** Free use with attribution
-- **File:** [LICENSE](LICENSE)
-
-#### For Commercial Use
-- **Status:** Rights reserved
-- **Contact:** contact@mikeamega.ca for licensing terms
-
-#### For Patent Applications
-- **Status:** All patent rights reserved
-- **Scope:** Future improvements and undisclosed variations
+**Legal Effect:** This public disclosure prevents third-party patent claims on disclosed inventions while preserving the author's rights to commercialize and license this technology.
 
 ### Attribution Requirements
 
@@ -257,6 +308,7 @@ developed by Mike Amega (2025). See: https://github.com/Volgat/earcp
 - [x] Theoretical guarantees proven
 - [x] Comprehensive benchmarking completed
 - [x] Production-grade code with safeguards
+- [x] Business Source License 1.1 applied
 - [ ] PyPI package publication
 - [ ] Academic paper submission to conference
 - [ ] Extended documentation and tutorials
@@ -297,13 +349,13 @@ Contributors will be acknowledged in:
 ## 📧 Contact
 
 **Mike Amega**  
-Email: mikeamega@yahoo.fr 
-Location:  Ontario, Canada  
-GitHub: [@mikeamega](https://github.com/Volgat)
+Email: mikeamega@yahoo.fr  
+Location: Ontario, Canada  
+GitHub: [@Volgat](https://github.com/Volgat)
 
-### For Licensing Inquiries
-Email: info@amewebstudio.com
-Subject: "EARCP Commercial License Inquiry"
+### For Commercial Licensing Inquiries
+**Email:** info@amewebstudio.com  
+**Subject:** "EARCP Commercial License Inquiry"
 
 ### For Research Collaboration
 Open to collaborations on:
@@ -322,6 +374,7 @@ Open to collaborations on:
 - Comprehensive documentation
 - Benchmark results on three domains
 - Defensive publication for IP protection
+- Business Source License 1.1 applied
 
 ---
 
@@ -340,7 +393,7 @@ Thanks to the open-source machine learning community for tools and datasets that
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
-For full legal terms, see [LICENSE](LICENSE) file.
+For full legal terms, see [LICENSE.md](LICENSE.md) file.
 
 ---
 
@@ -353,11 +406,10 @@ This repository includes the following for complete IP protection:
 - [x] Complete working code with documentation
 - [x] Timestamp through GitHub commit history
 - [x] Copyright notices in all files
-- [x] License file specifying terms
+- [x] Business Source License 1.1 applied
 - [x] Citation guidelines
 - [ ] DOI from Zenodo/figshare (recommended)
 - [ ] arXiv submission (recommended within 30 days)
-- [ ] USPTO provisional patent (optional, if desired)
 
 ---
 
@@ -369,6 +421,7 @@ This repository includes the following for complete IP protection:
 
 ---
 
-*Last Updated: November 13, 2025*  
+*Last Updated: December 3, 2025*  
 *Repository: https://github.com/Volgat/earcp*  
-*Prior Art Date: November 13, 2025*
+*Prior Art Date: November 13, 2025*  
+*License: Business Source License 1.1*
