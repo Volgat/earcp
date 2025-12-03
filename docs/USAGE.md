@@ -1,21 +1,21 @@
-# EARCP - Guide d'Utilisation Complet
+# EARCP - Complete Usage Guide
 
 **Ensemble Auto-Régulé par Cohérence et Performance**
 
-Copyright © 2025 Mike Amega. Tous droits réservés.
+Copyright © 2025 Mike Amega. All rights reserved.
 
 ---
 
-## 📑 Table des Matières
+## 📑 Table of Contents
 
 1. [Installation](#installation)
-2. [Démarrage Rapide](#démarrage-rapide)
-3. [Concepts Fondamentaux](#concepts-fondamentaux)
+2. [Quick Start](#quick-start)
+3. [Core Concepts](#core-concepts)
 4. [Configuration](#configuration)
-5. [Utilisation Avancée](#utilisation-avancée)
-6. [Intégration avec les Frameworks ML](#intégration-avec-les-frameworks-ml)
-7. [Visualisation et Diagnostics](#visualisation-et-diagnostics)
-8. [Cas d'Utilisation](#cas-dutilisation)
+5. [Advanced Usage](#advanced-usage)
+6. [ML Framework Integration](#ml-framework-integration)
+7. [Visualization & Diagnostics](#visualization--diagnostics)
+8. [Use Cases](#use-cases)
 9. [API Reference](#api-reference)
 10. [Troubleshooting](#troubleshooting)
 11. [FAQ](#faq)
@@ -24,81 +24,81 @@ Copyright © 2025 Mike Amega. Tous droits réservés.
 
 ## 🚀 Installation
 
-### Installation depuis PyPI (Recommandé)
+### Install from PyPI (Recommended)
 
-EARCP est maintenant disponible sur PyPI ! Installation simple :
+EARCP is now available on PyPI! Simple installation:
 
 ```bash
 pip install earcp
 ```
 
-### Installation avec dépendances optionnelles
+### Install with Optional Dependencies
 
 ```bash
-# Avec support PyTorch
+# With PyTorch support
 pip install earcp[torch]
 
-# Avec support scikit-learn
+# With scikit-learn support
 pip install earcp[sklearn]
 
-# Avec support TensorFlow/Keras
+# With TensorFlow/Keras support
 pip install earcp[tensorflow]
 
-# Avec toutes les dépendances de visualisation
+# With all visualization dependencies
 pip install earcp[viz]
 
-# Installation complète (toutes les dépendances)
+# Full installation (all dependencies)
 pip install earcp[full]
 ```
 
-### Installation depuis GitHub
+### Install from GitHub
 
-Pour la version de développement la plus récente :
+For the latest development version:
 
 ```bash
-# Installation directe
+# Direct installation
 pip install git+https://github.com/Volgat/earcp.git@earcp-lib
 
-# Ou cloner et installer localement
+# Or clone and install locally
 git clone -b earcp-lib https://github.com/Volgat/earcp.git
 cd earcp
 pip install -e .
 ```
 
-### Dépendances
+### Dependencies
 
-**Obligatoires :**
+**Required:**
 - numpy >= 1.20.0
 - scipy >= 1.7.0
 
-**Optionnelles :**
-- matplotlib >= 3.3.0 (visualisation)
-- torch >= 1.9.0 (support PyTorch)
-- tensorflow >= 2.4.0 (support TensorFlow)
-- scikit-learn >= 0.24.0 (wrappers et métriques)
+**Optional:**
+- matplotlib >= 3.3.0 (visualization)
+- torch >= 1.9.0 (PyTorch support)
+- tensorflow >= 2.4.0 (TensorFlow support)
+- scikit-learn >= 0.24.0 (wrappers and metrics)
 
-### Vérification de l'installation
+### Verify Installation
 
 ```python
 import earcp
 print(f"EARCP version: {earcp.__version__}")
 
-# Test rapide
+# Quick test
 from earcp import EARCP
-print("Installation réussie !")
+print("Installation successful!")
 ```
 
 ---
 
-## ⚡ Démarrage Rapide
+## ⚡ Quick Start
 
-### Exemple Minimal (30 secondes)
+### Minimal Example (30 seconds)
 
 ```python
 from earcp import EARCP
 import numpy as np
 
-# 1. Définir des modèles experts (tout modèle avec .predict())
+# 1. Define expert models (any model with .predict() method)
 class SimpleExpert:
     def __init__(self, coefficient):
         self.coefficient = coefficient
@@ -106,55 +106,55 @@ class SimpleExpert:
     def predict(self, x):
         return self.coefficient * x
 
-# 2. Créer vos experts
+# 2. Create your experts
 experts = [
     SimpleExpert(1.0),
     SimpleExpert(2.0),
     SimpleExpert(0.5),
 ]
 
-# 3. Initialiser EARCP
+# 3. Initialize EARCP
 ensemble = EARCP(experts=experts)
 
-# 4. Utiliser en ligne
+# 4. Online learning loop
 for t in range(100):
     x = np.random.randn(5)
     
-    # Prédiction
+    # Prediction
     prediction, expert_preds = ensemble.predict(x)
     
-    # Observer la cible
+    # Observe target
     target = 1.5 * x + np.random.randn(5) * 0.1
     
-    # Mettre à jour
+    # Update
     metrics = ensemble.update(expert_preds, target)
 
-print(f"Poids finaux: {ensemble.get_weights()}")
+print(f"Final weights: {ensemble.get_weights()}")
 ```
 
-### Exemple Complet avec Données Réelles
+### Complete Example with Real Data
 
 ```python
 import numpy as np
 from earcp import EARCP
 
-# Générer des données synthétiques
+# Generate synthetic data
 np.random.seed(42)
-T = 500  # Nombre d'étapes
+T = 500  # Number of time steps
 
 def generate_data(t):
-    """Fonction cible avec changement de régime."""
+    """Target function with regime change."""
     x = t * 0.05
     if t < 250:
-        # Régime linéaire
+        # Linear regime
         return 2*x + np.random.normal(0, 0.1)
     else:
-        # Régime sinusoïdal
+        # Sinusoidal regime
         return 2*x + 3*np.sin(x) + np.random.normal(0, 0.1)
 
-# Définir des experts avec différentes stratégies
+# Define experts with different strategies
 class LinearExpert:
-    """Expert basé sur une fonction linéaire."""
+    """Expert based on linear function."""
     def __init__(self, slope, intercept=0):
         self.slope = slope
         self.intercept = intercept
@@ -163,7 +163,7 @@ class LinearExpert:
         return self.slope * x + self.intercept
 
 class PolynomialExpert:
-    """Expert basé sur un polynôme."""
+    """Expert based on polynomial."""
     def __init__(self, coefficients):
         self.coefficients = coefficients
     
@@ -171,7 +171,7 @@ class PolynomialExpert:
         return sum(c * x**i for i, c in enumerate(self.coefficients))
 
 class SinusoidalExpert:
-    """Expert basé sur une fonction sinusoïdale."""
+    """Expert based on sinusoidal function."""
     def __init__(self, amplitude, frequency, phase=0):
         self.amplitude = amplitude
         self.frequency = frequency
@@ -180,7 +180,7 @@ class SinusoidalExpert:
     def predict(self, x):
         return self.amplitude * np.sin(self.frequency * x + self.phase)
 
-# Créer un ensemble d'experts diversifiés
+# Create diverse ensemble of experts
 experts = [
     LinearExpert(slope=2.0, intercept=0.5),
     LinearExpert(slope=1.8, intercept=1.0),
@@ -188,220 +188,220 @@ experts = [
     SinusoidalExpert(amplitude=3.0, frequency=1.0),
 ]
 
-# Initialiser EARCP avec paramètres optimaux
+# Initialize EARCP with optimal parameters
 ensemble = EARCP(
     experts=experts,
-    beta=0.7,        # Balance performance/cohérence
-    eta_s=5.0,       # Sensibilité des poids
-    alpha_P=0.9,     # Lissage de la performance
-    alpha_C=0.85,    # Lissage de la cohérence
-    w_min=0.05       # Poids minimum (évite l'exclusion)
+    beta=0.7,        # Performance/coherence balance
+    eta_s=5.0,       # Weight sensitivity
+    alpha_P=0.9,     # Performance smoothing
+    alpha_C=0.85,    # Coherence smoothing
+    w_min=0.05       # Minimum weight (prevents exclusion)
 )
 
-# Apprentissage en ligne
+# Online learning
 predictions = []
 targets = []
 weights_history = []
 
 for t in range(T):
-    # Entrée
+    # Input
     x = np.array([t * 0.05])
     
-    # Cible réelle
+    # True target
     target = np.array([generate_data(t)])
     
-    # Prédiction d'ensemble
+    # Ensemble prediction
     pred, expert_preds = ensemble.predict(x)
     
-    # Mise à jour des poids
+    # Update weights
     metrics = ensemble.update(expert_preds, target)
     
-    # Sauvegarder pour analyse
+    # Save for analysis
     predictions.append(pred[0])
     targets.append(target[0])
     weights_history.append(metrics['weights'].copy())
     
-    # Affichage périodique
+    # Periodic display
     if (t + 1) % 100 == 0:
         current_weights = metrics['weights']
-        print(f"Étape {t+1}:")
-        print(f"  Poids: {[f'{w:.3f}' for w in current_weights]}")
-        print(f"  Erreur: {metrics['ensemble_loss']:.4f}")
+        print(f"Step {t+1}:")
+        print(f"  Weights: {[f'{w:.3f}' for w in current_weights]}")
+        print(f"  Error: {metrics['ensemble_loss']:.4f}")
 
-# Diagnostics finaux
+# Final diagnostics
 diagnostics = ensemble.get_diagnostics()
 print(f"\n{'='*50}")
-print("RÉSULTATS FINAUX")
+print("FINAL RESULTS")
 print(f"{'='*50}")
-print(f"Poids finaux: {[f'{w:.3f}' for w in diagnostics['weights']]}")
-print(f"Pertes cumulatives: {diagnostics['cumulative_loss']}")
+print(f"Final weights: {[f'{w:.3f}' for w in diagnostics['weights']]}")
+print(f"Cumulative losses: {diagnostics['cumulative_loss']}")
 
-# Calculer l'erreur RMSE
+# Calculate overall RMSE
 rmse = np.sqrt(np.mean((np.array(predictions) - np.array(targets))**2))
-print(f"RMSE global: {rmse:.4f}")
+print(f"Overall RMSE: {rmse:.4f}")
 ```
 
 ---
 
-## 📚 Concepts Fondamentaux
+## 📚 Core Concepts
 
-### Architecture EARCP
+### EARCP Architecture
 
-EARCP est un système d'ensemble qui combine intelligemment plusieurs modèles experts en utilisant un **mécanisme de pondération à double signal**.
+EARCP is an ensemble system that intelligently combines multiple expert models using a **dual-signal weighting mechanism**.
 
-#### Les Deux Signaux
+#### The Two Signals
 
 1. **Performance (P)** 📈
-   - Mesure la qualité individuelle des prédictions de chaque expert
-   - Score élevé = expert performant
-   - Utilise un lissage exponentiel pour la stabilité
+   - Measures individual prediction quality of each expert
+   - High score = high performing expert
+   - Uses exponential smoothing for stability
 
-2. **Cohérence (C)** 🤝
-   - Mesure l'accord entre un expert et les autres
-   - Score élevé = expert en phase avec le consensus
-   - Favorise la diversité et la robustesse
+2. **Coherence (C)** 🤝
+   - Measures agreement between an expert and others
+   - High score = expert aligned with consensus
+   - Promotes diversity and robustness
 
-#### Algorithme Étape par Étape
+#### Algorithm Step by Step
 
-À chaque instant *t*, EARCP effectue les opérations suivantes :
+At each time step *t*, EARCP performs the following operations:
 
-**Étape 1 : Collection des Prédictions**
+**Step 1: Collect Predictions**
 ```
-Obtenir p₁,ₜ, p₂,ₜ, ..., p_M,ₜ des M experts
+Get p₁,ₜ, p₂,ₜ, ..., p_M,ₜ from M experts
 ```
 
-**Étape 2 : Calcul de la Performance**
+**Step 2: Compute Performance**
 ```
 P_i,t = α_P · P_i,t-1 + (1 - α_P) · (-ℓ_i,t)
 
-où ℓ_i,t = perte de l'expert i à l'instant t
+where ℓ_i,t = loss of expert i at time t
 ```
 
-**Étape 3 : Calcul de la Cohérence**
+**Step 3: Compute Coherence**
 ```
 C_i,t = 1/(M-1) · Σⱼ≠ᵢ Agreement(pᵢ,ₜ, pⱼ,ₜ)
 
-Agreement mesure la similarité entre prédictions
+Agreement measures similarity between predictions
 ```
 
-**Étape 4 : Fusion des Signaux**
+**Step 4: Fuse Signals**
 ```
 s_i,t = β · P_i,t + (1 - β) · C_i,t
 
-β contrôle la balance entre performance et cohérence
+β controls balance between performance and coherence
 ```
 
-**Étape 5 : Mise à Jour des Poids**
+**Step 5: Update Weights**
 ```
 w̃_i,t = exp(η_s · s_i,t)
 w_i,t = max(w_min, w̃_i,t / Σⱼ w̃_j,t)
 
-w_min garantit un poids minimum à chaque expert
+w_min ensures minimum weight for each expert
 ```
 
-**Étape 6 : Prédiction d'Ensemble**
+**Step 6: Ensemble Prediction**
 ```
 ŷ_t = Σᵢ w_i,t · p_i,t
 ```
 
-### Garanties Théoriques
+### Theoretical Guarantees
 
-**Théorème (Borne de Regret)** : Sous des hypothèses standards (pertes bornées dans [0,1], convexité), EARCP garantit :
+**Theorem (Regret Bound)**: Under standard assumptions (bounded losses in [0,1], convexity), EARCP guarantees:
 
 ```
 Regret_T ≤ (1/β) · √(2T log M)
 ```
 
-Pour β = 1 (performance pure) :
+For β = 1 (pure performance):
 ```
 Regret_T ≤ √(2T log M)
 ```
 
-**Implications pratiques :**
-- Le regret par étape décroît en O(√(log M / T))
-- Performance asymptotiquement optimale
-- Comparable au meilleur expert en rétrospective
+**Practical implications:**
+- Regret per step decreases as O(√(log M / T))
+- Asymptotically optimal performance
+- Comparable to best expert in hindsight
 
-### Paramètres : Guide Complet
+### Parameters: Complete Guide
 
-| Paramètre | Rôle | Défaut | Plage | Impact |
-|-----------|------|--------|-------|--------|
-| **alpha_P** | Mémoire de la performance | 0.9 | [0.8, 0.99] | ↑ = plus de mémoire, réaction lente<br>↓ = oubli rapide, adaptation rapide |
-| **alpha_C** | Mémoire de la cohérence | 0.85 | [0.75, 0.95] | ↑ = cohérence stable<br>↓ = cohérence réactive |
-| **beta** | Balance P/C | 0.7 | [0.5, 1.0] | ↑ = favorise performance<br>↓ = favorise diversité |
-| **eta_s** | Taux d'apprentissage | 5.0 | [1.0, 10.0] | ↑ = changements rapides<br>↓ = stabilité |
-| **w_min** | Poids plancher | 0.05 | [0.01, 0.2] | Évite l'exclusion complète |
+| Parameter | Role | Default | Range | Impact |
+|-----------|------|---------|-------|--------|
+| **alpha_P** | Performance memory | 0.9 | [0.8, 0.99] | ↑ = more memory, slow reaction<br>↓ = fast forgetting, quick adaptation |
+| **alpha_C** | Coherence memory | 0.85 | [0.75, 0.95] | ↑ = stable coherence<br>↓ = reactive coherence |
+| **beta** | P/C balance | 0.7 | [0.5, 1.0] | ↑ = favor performance<br>↓ = favor diversity |
+| **eta_s** | Learning rate | 5.0 | [1.0, 10.0] | ↑ = fast changes<br>↓ = stability |
+| **w_min** | Weight floor | 0.05 | [0.01, 0.2] | Prevents complete exclusion |
 
-#### Guide de Réglage de Beta
+#### Beta Tuning Guide
 
-**β = 1.0** : Mode Performance Pure
-- Équivalent à l'algorithme Hedge
-- Utiliser quand : vous avez confiance absolue en vos métriques
-- Avantage : convergence rapide vers le meilleur
-- Inconvénient : peut sur-adapter, manque de robustesse
+**β = 1.0**: Pure Performance Mode
+- Equivalent to Hedge algorithm
+- Use when: absolute confidence in your metrics
+- Advantage: fast convergence to the best
+- Disadvantage: can overfit, lacks robustness
 
-**β = 0.8-0.9** : Mode Performance Dominant
-- Favorise fortement la performance
-- Utiliser quand : environnement stable, métriques fiables
-- Avantage : bonne performance, un peu de diversité
-- Inconvénient : peut encore sur-adapter
+**β = 0.8-0.9**: Performance-Dominant Mode
+- Strongly favors performance
+- Use when: stable environment, reliable metrics
+- Advantage: good performance with some diversity
+- Disadvantage: still can overfit
 
-**β = 0.6-0.7** : Mode Équilibré ⭐ (Recommandé)
-- Balance optimale entre performance et cohérence
-- Utiliser quand : environnement variable, incertitude modérée
-- Avantage : robuste, adaptable, bon compromis
-- Idéal pour la plupart des applications
+**β = 0.6-0.7**: Balanced Mode ⭐ (Recommended)
+- Optimal balance between performance and coherence
+- Use when: variable environment, moderate uncertainty
+- Advantage: robust, adaptable, good compromise
+- Ideal for most applications
 
-**β = 0.4-0.5** : Mode Diversité
-- Favorise fortement la cohérence
-- Utiliser quand : environnement très bruité, métriques peu fiables
-- Avantage : maximum de robustesse et diversité
-- Inconvénient : convergence plus lente
+**β = 0.4-0.5**: Diversity Mode
+- Strongly favors coherence
+- Use when: very noisy environment, unreliable metrics
+- Advantage: maximum robustness and diversity
+- Disadvantage: slower convergence
 
-**β = 0.0** : Mode Cohérence Pure (Expérimental)
-- Pondération basée uniquement sur l'accord inter-experts
-- Utiliser quand : aucune confiance dans les métriques individuelles
-- Avantage : consensus pur
-- Inconvénient : peut ignorer de bons experts isolés
+**β = 0.0**: Pure Coherence Mode (Experimental)
+- Weighting based solely on inter-expert agreement
+- Use when: no confidence in individual metrics
+- Advantage: pure consensus
+- Disadvantage: can ignore good isolated experts
 
-#### Règles Pratiques de Réglage
+#### Practical Tuning Rules
 
-**Pour eta_s (Sensibilité) :**
+**For eta_s (Sensitivity):**
 ```python
-# Environnement stable
+# Stable environment
 eta_s = 3.0 - 4.0
 
-# Environnement modéré (défaut)
+# Moderate environment (default)
 eta_s = 5.0 - 6.0
 
-# Environnement très dynamique
+# Highly dynamic environment
 eta_s = 7.0 - 9.0
 ```
 
-**Pour w_min (Poids minimum) :**
+**For w_min (Minimum weight):**
 ```python
-# Règle générale : entre 0.5/M et 2.0/M
+# General rule: between 0.5/M and 2.0/M
 M = len(experts)
-w_min = 1.0 / M  # Bon point de départ
+w_min = 1.0 / M  # Good starting point
 
-# Beaucoup d'experts
+# Many experts
 if M > 10:
     w_min = 0.5 / M
 
-# Peu d'experts
+# Few experts
 if M <= 3:
-    w_min = 0.1  # Plus conservateur
+    w_min = 0.1  # More conservative
 ```
 
-**Pour alpha_P et alpha_C :**
+**For alpha_P and alpha_C:**
 ```python
-# Environnement stationnaire
+# Stationary environment
 alpha_P, alpha_C = 0.95, 0.90
 
-# Environnement modérément variable (défaut)
+# Moderately variable environment (default)
 alpha_P, alpha_C = 0.90, 0.85
 
-# Environnement très variable (concept drift)
+# Highly variable environment (concept drift)
 alpha_P, alpha_C = 0.85, 0.80
 ```
 
@@ -409,117 +409,117 @@ alpha_P, alpha_C = 0.85, 0.80
 
 ## ⚙️ Configuration
 
-### Utiliser EARCPConfig
+### Using EARCPConfig
 
 ```python
 from earcp import EARCP, EARCPConfig
 
-# Créer une configuration personnalisée
+# Create custom configuration
 config = EARCPConfig(
-    # Paramètres de lissage
+    # Smoothing parameters
     alpha_P=0.9,
     alpha_C=0.85,
     
-    # Balance et sensibilité
+    # Balance and sensitivity
     beta=0.7,
     eta_s=5.0,
     
-    # Contraintes
+    # Constraints
     w_min=0.05,
     epsilon=1e-10,
     
-    # Mode de prédiction
-    prediction_mode='regression',  # 'regression', 'classification', ou 'auto'
+    # Prediction mode
+    prediction_mode='regression',  # 'regression', 'classification', or 'auto'
     
-    # Fonctions personnalisées
-    loss_fn=None,          # Fonction de perte personnalisée
-    coherence_fn=None,     # Fonction de cohérence personnalisée
+    # Custom functions
+    loss_fn=None,          # Custom loss function
+    coherence_fn=None,     # Custom coherence function
     
-    # Options de suivi
+    # Tracking options
     track_diagnostics=True,
     normalize_weights=True,
     
-    # Reproductibilité
+    # Reproducibility
     random_state=42
 )
 
-# Utiliser la configuration
+# Use the configuration
 ensemble = EARCP(experts=experts, config=config)
 ```
 
-### Configurations Prédéfinies
+### Preset Configurations
 
-EARCP fournit plusieurs configurations optimisées pour différents cas d'usage :
+EARCP provides several optimized configurations for different use cases:
 
 ```python
 from earcp import get_preset_config
 
-# 1. Configuration par défaut (équilibrée)
+# 1. Default configuration (balanced)
 config = get_preset_config('default')
-# beta=0.7, eta_s=5.0, adapté à la plupart des cas
+# beta=0.7, eta_s=5.0, suitable for most cases
 
-# 2. Focus sur la performance
+# 2. Performance-focused
 config = get_preset_config('performance_focused')
-# beta=0.95, privilégie les experts performants
+# beta=0.95, prioritizes high-performing experts
 
-# 3. Focus sur la diversité
+# 3. Diversity-focused
 config = get_preset_config('diversity_focused')
-# beta=0.5, favorise le consensus et la robustesse
+# beta=0.5, favors consensus and robustness
 
-# 4. Configuration équilibrée optimale
+# 4. Optimal balanced configuration
 config = get_preset_config('balanced')
-# beta=0.7, paramètres finement ajustés
+# beta=0.7, finely tuned parameters
 
-# 5. Mode conservateur
+# 5. Conservative mode
 config = get_preset_config('conservative')
-# Changements lents, grande stabilité
+# Slow changes, high stability
 
-# 6. Mode agressif
+# 6. Aggressive mode
 config = get_preset_config('aggressive')
-# Changements rapides, adaptation dynamique
+# Fast changes, dynamic adaptation
 
-# 7. Mode robuste (pour données bruitées)
+# 7. Robust mode (for noisy data)
 config = get_preset_config('robust')
-# beta=0.6, w_min élevé, résiste au bruit
+# beta=0.6, high w_min, resists noise
 
-# 8. Mode haute performance
+# 8. High-performance mode
 config = get_preset_config('high_performance')
-# beta=0.9, convergence rapide
+# beta=0.9, fast convergence
 
-# Utilisation
+# Usage
 ensemble = EARCP(experts=experts, config=config)
 ```
 
-### Fonctions de Perte Personnalisées
+### Custom Loss Functions
 
 ```python
 import numpy as np
 
-# Fonction de perte pour régression
+# Loss function for regression
 def custom_regression_loss(y_pred, y_true):
     """
-    Fonction de perte personnalisée.
-    Doit retourner une valeur dans [0, 1].
+    Custom loss function.
+    Must return a value in [0, 1].
     """
     mse = np.mean((y_pred - y_true) ** 2)
-    # Normaliser avec tanh ou sigmoid
+    # Normalize with tanh or sigmoid
     return np.tanh(mse)
 
-# Fonction de perte pour classification
+# Loss function for classification
 def custom_classification_loss(y_pred, y_true):
     """
-    Cross-entropy pour classification.
+    Cross-entropy for classification.
     """
     # y_pred: probabilities, y_true: one-hot
     epsilon = 1e-10
     ce = -np.sum(y_true * np.log(y_pred + epsilon))
     return ce / len(y_true)
 
-# Fonction de perte robuste (insensible aux outliers)
+# Robust loss (insensitive to outliers)
 def huber_loss(y_pred, y_true, delta=1.0):
     """
-    Perte de Huber : quadratique pour petites erreurs,
-    linéaire pour grandes erreurs.
+    Huber loss: quadratic for small errors,
+    linear for large errors.
     """
     error = np.abs(y_pred - y_true)
     is_small = error <= delta
@@ -528,61 +528,61 @@ def huber_loss(y_pred, y_true, delta=1.0):
     large_loss = delta * error - 0.5 * delta**2
     
     loss = np.where(is_small, small_loss, large_loss)
-    return np.mean(loss) / (2 * delta)  # Normaliser à [0, 1]
+    return np.mean(loss) / (2 * delta)  # Normalize to [0, 1]
 
-# Utilisation
+# Usage
 config = EARCPConfig(loss_fn=huber_loss)
 ensemble = EARCP(experts=experts, config=config)
 ```
 
-### Fonctions de Cohérence Personnalisées
+### Custom Coherence Functions
 
 ```python
 import numpy as np
 
-# Cohérence basée sur la corrélation
+# Correlation-based coherence
 def correlation_coherence(pred_i, pred_j):
     """
-    Mesure la corrélation entre deux prédictions.
-    Retourne une valeur dans [0, 1].
+    Measures correlation between two predictions.
+    Returns a value in [0, 1].
     """
-    # Aplatir les prédictions
+    # Flatten predictions
     pi = pred_i.flatten()
     pj = pred_j.flatten()
     
-    # Calculer la corrélation de Pearson
+    # Calculate Pearson correlation
     if len(pi) > 1:
         correlation = np.corrcoef(pi, pj)[0, 1]
-        # Mapper [-1, 1] à [0, 1]
+        # Map [-1, 1] to [0, 1]
         return (correlation + 1) / 2
     else:
-        # Similarité directe pour prédictions scalaires
+        # Direct similarity for scalar predictions
         return 1.0 / (1.0 + np.abs(pi - pj))
 
-# Cohérence basée sur la distance
+# Distance-based coherence
 def distance_coherence(pred_i, pred_j):
     """
-    Cohérence basée sur la distance euclidienne.
-    Plus la distance est petite, plus la cohérence est élevée.
+    Coherence based on Euclidean distance.
+    Smaller distance = higher coherence.
     """
     distance = np.linalg.norm(pred_i - pred_j)
-    # Transformer distance en similarité
+    # Transform distance into similarity
     return np.exp(-distance)
 
-# Cohérence pour classification (accord sur les classes)
+# Coherence for classification (agreement on classes)
 def classification_coherence(pred_i, pred_j):
     """
-    Pour classification : pourcentage d'accord sur les classes prédites.
+    For classification: percentage of agreement on predicted classes.
     """
     class_i = np.argmax(pred_i, axis=-1)
     class_j = np.argmax(pred_j, axis=-1)
     agreement = np.mean(class_i == class_j)
     return agreement
 
-# Cohérence pondérée (favorise certaines dimensions)
+# Weighted coherence (favors certain dimensions)
 def weighted_coherence(pred_i, pred_j, weights=None):
     """
-    Cohérence avec pondération des dimensions.
+    Coherence with dimension weighting.
     """
     if weights is None:
         weights = np.ones(pred_i.shape)
@@ -591,37 +591,37 @@ def weighted_coherence(pred_i, pred_j, weights=None):
     distance = np.sqrt(np.sum(diff))
     return np.exp(-distance)
 
-# Utilisation
+# Usage
 config = EARCPConfig(coherence_fn=correlation_coherence)
 ensemble = EARCP(experts=experts, config=config)
 ```
 
 ---
 
-## 🔬 Utilisation Avancée
+## 🔬 Advanced Usage
 
-### Sauvegarder et Charger l'État
+### Save and Load State
 
 ```python
 import pickle
 
-# Sauvegarder l'état complet
+# Save complete ensemble state
 ensemble.save_state('checkpoints/ensemble_step_1000.pkl')
 
-# Charger l'état
+# Load state
 ensemble_restored = EARCP(experts=experts)
 ensemble_restored.load_state('checkpoints/ensemble_step_1000.pkl')
 
-# Continuer l'apprentissage
+# Continue learning
 for t in range(1000, 2000):
     pred, expert_preds = ensemble_restored.predict(x[t])
     ensemble_restored.update(expert_preds, y[t])
 ```
 
-### Sauvegardes Périodiques
+### Periodic Checkpoints
 
 ```python
-# Sauvegarder tous les N pas
+# Save every N steps
 CHECKPOINT_INTERVAL = 100
 
 for t in range(T):
@@ -631,63 +631,63 @@ for t in range(T):
     # Checkpoint
     if (t + 1) % CHECKPOINT_INTERVAL == 0:
         ensemble.save_state(f'checkpoints/step_{t+1}.pkl')
-        print(f"Checkpoint sauvegardé à l'étape {t+1}")
+        print(f"Checkpoint saved at step {t+1}")
 ```
 
-### Réinitialiser l'Ensemble
+### Reset Ensemble
 
 ```python
-# Réinitialiser complètement (poids uniformes)
+# Complete reset (uniform weights)
 ensemble.reset()
 
-# Réinitialiser avec des poids personnalisés
+# Reset with custom weights
 custom_weights = np.array([0.5, 0.3, 0.2])
 ensemble.reset(initial_weights=custom_weights)
 ```
 
-### Modifier les Paramètres Dynamiquement
+### Modify Parameters Dynamically
 
 ```python
-# Ajuster beta en cours d'exécution (exemple : décroissance)
+# Adjust beta during runtime (e.g., decay)
 for t in range(T):
-    # Décroître beta progressivement de 0.9 à 0.6
+    # Gradually decrease beta from 0.9 to 0.6
     current_beta = 0.9 - 0.3 * (t / T)
     ensemble.weighting.set_beta(current_beta)
     
     pred, expert_preds = ensemble.predict(x[t])
     ensemble.update(expert_preds, y[t])
 
-# Ajuster la sensibilité selon le contexte
+# Adjust sensitivity based on context
 if detect_concept_drift():
-    ensemble.weighting.set_eta_s(8.0)  # Plus agressif
+    ensemble.weighting.set_eta_s(8.0)  # More aggressive
 else:
-    ensemble.weighting.set_eta_s(4.0)  # Plus conservateur
+    ensemble.weighting.set_eta_s(4.0)  # More conservative
 
-# Ajuster les facteurs de lissage
-ensemble.performance_tracker.set_alpha(0.95)  # Plus de mémoire
-ensemble.coherence_metrics.set_alpha(0.80)    # Moins de mémoire
+# Adjust smoothing factors
+ensemble.performance_tracker.set_alpha(0.95)  # More memory
+ensemble.coherence_metrics.set_alpha(0.80)    # Less memory
 ```
 
-### Accéder aux Composants Internes
+### Access Internal Components
 
 ```python
-# Obtenir les scores de performance bruts
+# Get raw performance scores
 perf_scores = ensemble.performance_tracker.get_scores()
-print(f"Scores de performance: {perf_scores}")
+print(f"Performance scores: {perf_scores}")
 
-# Obtenir les scores de cohérence
+# Get coherence scores
 coh_scores = ensemble.coherence_metrics.get_scores()
-print(f"Scores de cohérence: {coh_scores}")
+print(f"Coherence scores: {coh_scores}")
 
-# Obtenir la matrice de cohérence complète
+# Get full coherence matrix
 expert_predictions = [expert.predict(x) for expert in experts]
 coh_matrix = ensemble.coherence_metrics.get_coherence_matrix(expert_predictions)
-print(f"Matrice de cohérence:\n{coh_matrix}")
+print(f"Coherence matrix:\n{coh_matrix}")
 
-# Obtenir l'historique complet des pertes
+# Get complete loss history
 loss_history = ensemble.performance_tracker.get_loss_history()
 
-# Obtenir les statistiques avancées
+# Get advanced statistics
 stats = {
     'mean_weight': np.mean(ensemble.get_weights()),
     'weight_std': np.std(ensemble.get_weights()),
@@ -696,46 +696,46 @@ stats = {
 }
 ```
 
-### Gestion Multi-Objectifs
+### Multi-Objective Management
 
 ```python
 from earcp.core.performance_tracker import MultiObjectivePerformanceTracker
 
-# Créer un tracker pour plusieurs objectifs
-# Exemple : trading avec profit ET risque
+# Create tracker for multiple objectives
+# Example: trading with profit AND risk
 tracker = MultiObjectivePerformanceTracker(
     n_experts=3,
     n_objectives=2,
-    objective_weights=[0.7, 0.3],  # 70% profit, 30% risque
-    aggregation='weighted_sum'      # ou 'product', 'min', 'max'
+    objective_weights=[0.7, 0.3],  # 70% profit, 30% risk
+    aggregation='weighted_sum'      # or 'product', 'min', 'max'
 )
 
-# Dans la boucle d'apprentissage
+# In learning loop
 for t in range(T):
     predictions = [expert.predict(state) for expert in experts]
     
-    # Exécuter l'action
+    # Execute action
     profit, risk = execute_trade(predictions)
     
-    # Mettre à jour avec les deux objectifs
+    # Update with both objectives
     tracker.update(
         predictions=predictions,
-        targets=[profit, -risk]  # Maximiser profit, minimiser risque
+        targets=[profit, -risk]  # Maximize profit, minimize risk
     )
     
-    # Obtenir les scores agrégés
+    # Get aggregated scores
     aggregated_scores = tracker.get_aggregated_scores()
 ```
 
-### Ensemble d'Ensembles (Méta-EARCP)
+### Ensemble of Ensembles (Meta-EARCP)
 
 ```python
-# Créer plusieurs ensembles EARCP
+# Create multiple EARCP ensembles
 ensemble_1 = EARCP(experts=experts_group_1, beta=0.8)
 ensemble_2 = EARCP(experts=experts_group_2, beta=0.6)
 ensemble_3 = EARCP(experts=experts_group_3, beta=0.7)
 
-# Wrapper pour utiliser un EARCP comme expert
+# Wrapper to use an EARCP as an expert
 class EARCPExpert:
     def __init__(self, earcp_ensemble):
         self.ensemble = earcp_ensemble
@@ -744,7 +744,7 @@ class EARCPExpert:
         pred, _ = self.ensemble.predict(x)
         return pred
 
-# Créer un méta-ensemble
+# Create meta-ensemble
 meta_experts = [
     EARCPExpert(ensemble_1),
     EARCPExpert(ensemble_2),
@@ -753,15 +753,15 @@ meta_experts = [
 
 meta_ensemble = EARCP(experts=meta_experts, beta=0.75)
 
-# Utilisation hiérarchique
+# Hierarchical usage
 for t in range(T):
-    # Prédiction du méta-ensemble
+    # Meta-ensemble prediction
     meta_pred, sub_preds = meta_ensemble.predict(x[t])
     
-    # Mise à jour de tous les niveaux
+    # Update all levels
     meta_ensemble.update(sub_preds, y[t])
     
-    # Mise à jour des ensembles de base (optionnel)
+    # Update base ensembles (optional)
     for i, sub_ensemble in enumerate([ensemble_1, ensemble_2, ensemble_3]):
         _, expert_preds = sub_ensemble.predict(x[t])
         sub_ensemble.update(expert_preds, y[t])
@@ -769,9 +769,9 @@ for t in range(T):
 
 ---
 
-## 🔗 Intégration avec les Frameworks ML
+## 🔗 ML Framework Integration
 
-### Avec scikit-learn
+### With scikit-learn
 
 ```python
 from sklearn.linear_model import Ridge, Lasso, ElasticNet
@@ -780,7 +780,7 @@ from sklearn.svm import SVR
 from earcp import EARCP
 from earcp.utils.wrappers import SklearnWrapper
 
-# Créer et entraîner des modèles sklearn
+# Create and train sklearn models
 models = {
     'ridge': Ridge(alpha=1.0),
     'lasso': Lasso(alpha=0.5),
@@ -790,39 +790,39 @@ models = {
     'svr': SVR(kernel='rbf')
 }
 
-# Entraîner tous les modèles
+# Train all models
 for name, model in models.items():
     model.fit(X_train, y_train)
-    print(f"{name} entraîné")
+    print(f"{name} trained")
 
-# Créer les wrappers pour EARCP
+# Create wrappers for EARCP
 experts = [SklearnWrapper(model, name=name) 
            for name, model in models.items()]
 
-# Créer l'ensemble
+# Create ensemble
 ensemble = EARCP(experts=experts, beta=0.7)
 
-# Évaluation en ligne sur le test set
+# Online evaluation on test set
 predictions = []
 for i, (x, y) in enumerate(zip(X_test, y_test)):
-    # Prédiction
+    # Prediction
     pred, expert_preds = ensemble.predict(x.reshape(1, -1))
     predictions.append(pred[0])
     
-    # Mise à jour
+    # Update
     ensemble.update(expert_preds, y.reshape(1, -1))
     
     if (i + 1) % 100 == 0:
         current_rmse = np.sqrt(np.mean((np.array(predictions) - y_test[:i+1])**2))
-        print(f"Étape {i+1}: RMSE = {current_rmse:.4f}")
+        print(f"Step {i+1}: RMSE = {current_rmse:.4f}")
 
-# Résultats finaux
+# Final results
 final_weights = ensemble.get_weights()
 for name, weight in zip(models.keys(), final_weights):
     print(f"{name}: {weight:.3f}")
 ```
 
-### Avec PyTorch
+### With PyTorch
 
 ```python
 import torch
@@ -830,7 +830,7 @@ import torch.nn as nn
 from earcp import EARCP
 from earcp.utils.wrappers import TorchWrapper
 
-# Définir différentes architectures
+# Define different architectures
 class SmallCNN(nn.Module):
     def __init__(self, input_dim, output_dim):
         super().__init__()
@@ -863,7 +863,7 @@ class DeepNN(nn.Module):
     def forward(self, x):
         return self.net(x)
 
-# Créer et entraîner les modèles
+# Create and train models
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 input_dim, output_dim = 10, 1
 
@@ -872,7 +872,7 @@ models = [
     DeepNN(input_dim, output_dim).to(device),
 ]
 
-# Entraînement (exemple simple)
+# Training (simple example)
 for model in models:
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     criterion = nn.MSELoss()
@@ -889,24 +889,24 @@ for model in models:
             loss.backward()
             optimizer.step()
 
-# Créer les wrappers
+# Create wrappers
 experts = [TorchWrapper(model, device=device) for model in models]
 
-# Mode évaluation pour les modèles PyTorch
+# Set models to eval mode
 for model in models:
     model.eval()
 
-# Créer l'ensemble EARCP
+# Create EARCP ensemble
 ensemble = EARCP(experts=experts)
 
-# Utilisation
+# Usage
 with torch.no_grad():
     for x, y in test_loader:
         pred, expert_preds = ensemble.predict(x)
         ensemble.update(expert_preds, y)
 ```
 
-### Avec TensorFlow/Keras
+### With TensorFlow/Keras
 
 ```python
 from tensorflow import keras
@@ -914,7 +914,7 @@ from tensorflow.keras import layers
 from earcp import EARCP
 from earcp.utils.wrappers import KerasWrapper
 
-# Créer différents modèles Keras
+# Create different Keras models
 def create_dense_model(input_dim, output_dim):
     model = keras.Sequential([
         layers.Dense(64, activation='relu', input_shape=(input_dim,)),
@@ -936,26 +936,26 @@ def create_deep_model(input_dim, output_dim):
     model.compile(optimizer='adam', loss='mse')
     return model
 
-# Créer plusieurs modèles
+# Create multiple models
 models = [
     create_dense_model(10, 1),
     create_deep_model(10, 1),
-    create_dense_model(10, 1),  # Même architecture, init différente
+    create_dense_model(10, 1),  # Same architecture, different init
 ]
 
-# Entraîner chaque modèle
+# Train each model
 for i, model in enumerate(models):
-    print(f"Entraînement du modèle {i+1}...")
+    print(f"Training model {i+1}...")
     model.fit(X_train, y_train, epochs=20, batch_size=32, 
               validation_split=0.2, verbose=0)
 
-# Créer les wrappers
+# Create wrappers
 experts = [KerasWrapper(model) for model in models]
 
-# Créer l'ensemble
+# Create ensemble
 ensemble = EARCP(experts=experts, beta=0.7)
 
-# Utilisation
+# Usage
 for i in range(len(X_test)):
     x = X_test[i:i+1]
     y = y_test[i:i+1]
@@ -964,18 +964,18 @@ for i in range(len(X_test)):
     ensemble.update(expert_preds, y)
 ```
 
-### Wrapper Universel pour Fonctions
+### Universal Wrapper for Functions
 
 ```python
 from earcp.utils.wrappers import CallableWrapper
 
-# Créer des experts à partir de fonctions simples
+# Create experts from simple functions
 def moving_average(x, window=5):
-    """Moyenne mobile."""
+    """Moving average."""
     return np.mean(x[-window:])
 
 def exponential_smoothing(x, alpha=0.3):
-    """Lissage exponentiel."""
+    """Exponential smoothing."""
     if len(x) == 0:
         return 0
     result = x[0]
@@ -984,43 +984,43 @@ def exponential_smoothing(x, alpha=0.3):
     return result
 
 def trend_extrapolation(x):
-    """Extrapolation de tendance."""
+    """Trend extrapolation."""
     if len(x) < 2:
         return x[-1] if len(x) > 0 else 0
     return 2 * x[-1] - x[-2]
 
-# Encapsuler les fonctions
+# Wrap functions
 experts = [
     CallableWrapper(moving_average, name='MA'),
     CallableWrapper(exponential_smoothing, name='ES'),
     CallableWrapper(trend_extrapolation, name='Trend')
 ]
 
-# Utiliser dans EARCP
+# Use in EARCP
 ensemble = EARCP(experts=experts)
 ```
 
-### Intégration avec LightGBM et XGBoost
+### Integration with LightGBM and XGBoost
 
 ```python
 import lightgbm as lgb
 import xgboost as xgb
 from earcp.utils.wrappers import SklearnWrapper
 
-# Créer des modèles de boosting
+# Create boosting models
 lgb_model = lgb.LGBMRegressor(n_estimators=100, learning_rate=0.1)
 xgb_model = xgb.XGBRegressor(n_estimators=100, learning_rate=0.1)
 
-# Entraîner
+# Train
 lgb_model.fit(X_train, y_train)
 xgb_model.fit(X_train, y_train)
 
-# Combiner avec autres modèles
+# Combine with other models
 from sklearn.ensemble import RandomForestRegressor
 rf_model = RandomForestRegressor(n_estimators=100)
 rf_model.fit(X_train, y_train)
 
-# Créer l'ensemble
+# Create ensemble
 experts = [
     SklearnWrapper(lgb_model, name='LightGBM'),
     SklearnWrapper(xgb_model, name='XGBoost'),
@@ -1032,33 +1032,33 @@ ensemble = EARCP(experts=experts, beta=0.75)
 
 ---
 
-## 📊 Visualisation et Diagnostics
+## 📊 Visualization & Diagnostics
 
-### Obtenir les Diagnostics Complets
+### Get Complete Diagnostics
 
 ```python
-# Obtenir tous les diagnostics
+# Get all diagnostics
 diagnostics = ensemble.get_diagnostics()
 
-# Contenu disponible
-print("Diagnostics disponibles:")
+# Available content
+print("Available diagnostics:")
 for key in diagnostics.keys():
     print(f"  - {key}: {type(diagnostics[key])}")
 
-# Diagnostics typiques:
-# - 'weights': Poids actuels [array]
-# - 'performance_scores': Scores de performance [array]
-# - 'coherence_scores': Scores de cohérence [array]
-# - 'time_step': Étape temporelle actuelle [int]
-# - 'weights_history': Historique complet des poids [list of arrays]
-# - 'performance_history': Historique des performances [list of arrays]
-# - 'coherence_history': Historique de la cohérence [list of arrays]
-# - 'cumulative_loss': Perte cumulative par expert [array]
-# - 'entropy': Entropie de la distribution des poids [float]
-# - 'effective_experts': Nombre d'experts actifs [float]
+# Typical diagnostics:
+# - 'weights': Current weights [array]
+# - 'performance_scores': Performance scores [array]
+# - 'coherence_scores': Coherence scores [array]
+# - 'time_step': Current time step [int]
+# - 'weights_history': Complete weight history [list of arrays]
+# - 'performance_history': Performance history [list of arrays]
+# - 'coherence_history': Coherence history [list of arrays]
+# - 'cumulative_loss': Cumulative loss per expert [array]
+# - 'entropy': Weight distribution entropy [float]
+# - 'effective_experts': Number of active experts [float]
 ```
 
-### Visualisations Standard
+### Standard Visualizations
 
 ```python
 from earcp.utils.visualization import (
@@ -1071,36 +1071,36 @@ from earcp.utils.visualization import (
 )
 import matplotlib.pyplot as plt
 
-# 1. Évolution des poids dans le temps
+# 1. Weight evolution over time
 fig, ax = plt.subplots(figsize=(12, 6))
 plot_weights(
     weights_history=diagnostics['weights_history'],
     expert_names=['Expert 1', 'Expert 2', 'Expert 3'],
     ax=ax,
-    title='Évolution des Poids EARCP',
+    title='EARCP Weight Evolution',
     save_path='figures/weights_evolution.png'
 )
 plt.show()
 
-# 2. Performance et cohérence
+# 2. Performance and coherence
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
 plot_performance(
     performance_history=diagnostics['performance_history'],
     expert_names=['Expert 1', 'Expert 2', 'Expert 3'],
     ax=ax1,
-    title='Scores de Performance'
+    title='Performance Scores'
 )
 plot_coherence(
     coherence_history=diagnostics['coherence_history'],
     expert_names=['Expert 1', 'Expert 2', 'Expert 3'],
     ax=ax2,
-    title='Scores de Cohérence'
+    title='Coherence Scores'
 )
 plt.tight_layout()
 plt.savefig('figures/performance_coherence.png')
 plt.show()
 
-# 3. Dashboard complet
+# 3. Complete dashboard
 fig = plot_diagnostics(
     diagnostics=diagnostics,
     expert_names=['Expert 1', 'Expert 2', 'Expert 3'],
@@ -1109,7 +1109,7 @@ fig = plot_diagnostics(
 )
 plt.show()
 
-# 4. Analyse du regret
+# 4. Regret analysis
 fig, ax = plt.subplots(figsize=(10, 6))
 ensemble_cumulative_loss = compute_ensemble_loss(predictions, targets)
 plot_regret(
@@ -1121,7 +1121,7 @@ plot_regret(
 )
 plt.show()
 
-# 5. Prédictions vs Réalité
+# 5. Predictions vs Reality
 fig, ax = plt.subplots(figsize=(12, 6))
 plot_predictions(
     predictions=predictions,
@@ -1129,28 +1129,28 @@ plot_predictions(
     expert_predictions=expert_predictions_history,
     expert_names=['Expert 1', 'Expert 2', 'Expert 3'],
     ax=ax,
-    title='Prédictions EARCP vs Réalité',
+    title='EARCP Predictions vs Reality',
     save_path='figures/predictions.png'
 )
 plt.show()
 ```
 
-### Visualisations Avancées
+### Advanced Visualizations
 
 ```python
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Matrice de corrélation des poids
+# Weight correlation matrix
 def plot_weight_correlation(weights_history):
-    """Corrélation entre l'évolution des poids des experts."""
+    """Correlation between expert weight evolution."""
     weights_array = np.array(weights_history).T  # (n_experts, time_steps)
     correlation_matrix = np.corrcoef(weights_array)
     
     plt.figure(figsize=(8, 6))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
                 center=0, vmin=-1, vmax=1)
-    plt.title('Corrélation de l\'évolution des poids')
+    plt.title('Weight Evolution Correlation')
     plt.xlabel('Expert')
     plt.ylabel('Expert')
     plt.tight_layout()
@@ -1159,44 +1159,47 @@ def plot_weight_correlation(weights_history):
 
 plot_weight_correlation(diagnostics['weights_history'])
 
-# Heatmap de la matrice de cohérence
+# Coherence matrix heatmap
 def plot_coherence_matrix(ensemble, expert_predictions):
-    """Visualiser la matrice de cohérence entre experts."""
+    """Visualize inter-expert coherence matrix."""
     coh_matrix = ensemble.coherence_metrics.get_coherence_matrix(expert_predictions)
     
     plt.figure(figsize=(8, 6))
     sns.heatmap(coh_matrix, annot=True, cmap='viridis',
                 vmin=0, vmax=1)
-    plt.title('Matrice de Cohérence Inter-Experts')
+    plt.title('Inter-Expert Coherence Matrix')
     plt.xlabel('Expert')
     plt.ylabel('Expert')
     plt.tight_layout()
     plt.savefig('figures/coherence_matrix.png')
     plt.show()
 
-# Distribution des poids à différents moments
-def plot_weight_distributions(weights_history, time_points=[0, len//4, len//2, -1]):
-    """Comparer les distributions de poids à différents moments."""
+# Weight distributions at different times
+def plot_weight_distributions(weights_history, time_points=None):
+    """Compare weight distributions at different moments."""
+    if time_points is None:
+        len_history = len(weights_history)
+        time_points = [0, len_history//4, len_history//2, -1]
+    
     fig, axes = plt.subplots(2, 2, figsize=(12, 10))
     axes = axes.flatten()
     
     for idx, t in enumerate(time_points):
         weights = weights_history[t]
         axes[idx].bar(range(len(weights)), weights)
-        axes[idx].set_title(f'Distribution à t={t}')
+        axes[idx].set_title(f'Distribution at t={t}')
         axes[idx].set_xlabel('Expert')
-        axes[idx].set_ylabel('Poids')
+        axes[idx].set_ylabel('Weight')
         axes[idx].set_ylim(0, 1)
     
     plt.tight_layout()
     plt.savefig('figures/weight_distributions.png')
     plt.show()
 
-len_history = len(diagnostics['weights_history'])
 plot_weight_distributions(diagnostics['weights_history'])
 ```
 
-### Métriques d'Évaluation
+### Evaluation Metrics
 
 ```python
 from earcp.utils.metrics import (
@@ -1208,68 +1211,68 @@ from earcp.utils.metrics import (
     compute_adaptability
 )
 
-# 1. Calculer le regret
+# 1. Calculate regret
 regret_metrics = compute_regret(
     expert_cumulative_losses=diagnostics['cumulative_loss'],
     ensemble_cumulative_loss=ensemble_cumulative_loss
 )
 
-print("=== ANALYSE DU REGRET ===")
-print(f"Regret absolu: {regret_metrics['regret']:.4f}")
-print(f"Regret relatif: {regret_metrics['relative_regret']:.2%}")
-print(f"Meilleur expert: {regret_metrics['best_expert']}")
-print(f"Pire expert: {regret_metrics['worst_expert']}")
+print("=== REGRET ANALYSIS ===")
+print(f"Absolute regret: {regret_metrics['regret']:.4f}")
+print(f"Relative regret: {regret_metrics['relative_regret']:.2%}")
+print(f"Best expert: {regret_metrics['best_expert']}")
+print(f"Worst expert: {regret_metrics['worst_expert']}")
 
-# 2. Calculer la diversité
+# 2. Calculate diversity
 diversity_metrics = compute_diversity(diagnostics['weights_history'])
 
-print("\n=== ANALYSE DE DIVERSITÉ ===")
-print(f"Entropie moyenne: {diversity_metrics['mean_entropy']:.4f}")
-print(f"Entropie max théorique: {diversity_metrics['max_entropy']:.4f}")
-print(f"Ratio d'utilisation: {diversity_metrics['utilization_ratio']:.2%}")
-print(f"Experts effectifs moyens: {diversity_metrics['mean_effective_experts']:.2f}")
+print("\n=== DIVERSITY ANALYSIS ===")
+print(f"Mean entropy: {diversity_metrics['mean_entropy']:.4f}")
+print(f"Max theoretical entropy: {diversity_metrics['max_entropy']:.4f}")
+print(f"Utilization ratio: {diversity_metrics['utilization_ratio']:.2%}")
+print(f"Mean effective experts: {diversity_metrics['mean_effective_experts']:.2f}")
 
-# 3. Borne théorique
+# 3. Theoretical bound
 T = len(predictions)
 M = len(experts)
 theoretical_bound = theoretical_regret_bound(T=T, M=M, beta=0.7)
 
-print("\n=== GARANTIES THÉORIQUES ===")
-print(f"Borne de regret O(√T log M): {theoretical_bound:.4f}")
-print(f"Regret observé: {regret_metrics['regret']:.4f}")
-print(f"Ratio (observé/théorique): {regret_metrics['regret']/theoretical_bound:.2%}")
+print("\n=== THEORETICAL GUARANTEES ===")
+print(f"Regret bound O(√T log M): {theoretical_bound:.4f}")
+print(f"Observed regret: {regret_metrics['regret']:.4f}")
+print(f"Ratio (observed/theoretical): {regret_metrics['regret']/theoretical_bound:.2%}")
 
-# 4. Évaluation de l'ensemble
+# 4. Ensemble evaluation
 eval_metrics = evaluate_ensemble(
     predictions=predictions,
     targets=targets,
     task_type='regression'
 )
 
-print("\n=== PERFORMANCE PRÉDICTIVE ===")
+print("\n=== PREDICTIVE PERFORMANCE ===")
 print(f"RMSE: {eval_metrics['rmse']:.4f}")
 print(f"MAE: {eval_metrics['mae']:.4f}")
 print(f"R²: {eval_metrics['r2']:.4f}")
-print(f"Corrélation: {eval_metrics['correlation']:.4f}")
+print(f"Correlation: {eval_metrics['correlation']:.4f}")
 
-# 5. Stabilité et adaptabilité
+# 5. Stability and adaptability
 stability = compute_stability(diagnostics['weights_history'])
 adaptability = compute_adaptability(diagnostics['weights_history'])
 
-print("\n=== COMPORTEMENT DYNAMIQUE ===")
-print(f"Stabilité (variation moyenne): {stability:.4f}")
-print(f"Adaptabilité (capacité de changement): {adaptability:.4f}")
+print("\n=== DYNAMIC BEHAVIOR ===")
+print(f"Stability (mean variation): {stability:.4f}")
+print(f"Adaptability (change capacity): {adaptability:.4f}")
 ```
 
-### Export des Résultats
+### Export Results
 
 ```python
 import json
 import pandas as pd
 
-# Créer un rapport complet
+# Create complete report
 def generate_report(ensemble, diagnostics, predictions, targets):
-    """Génère un rapport JSON complet."""
+    """Generate complete JSON report."""
     report = {
         'configuration': {
             'n_experts': len(ensemble.experts),
@@ -1296,15 +1299,15 @@ def generate_report(ensemble, diagnostics, predictions, targets):
         }
     }
     
-    # Sauvegarder
+    # Save
     with open('reports/earcp_report.json', 'w') as f:
         json.dump(report, f, indent=2)
     
     return report
 
-# Créer un DataFrame pour analyse
+# Create DataFrame for analysis
 def create_results_dataframe(diagnostics, predictions, targets):
-    """Crée un DataFrame avec tous les résultats."""
+    """Create DataFrame with all results."""
     df = pd.DataFrame({
         'step': range(len(predictions)),
         'prediction': predictions,
@@ -1313,38 +1316,38 @@ def create_results_dataframe(diagnostics, predictions, targets):
         'abs_error': np.abs(predictions - targets)
     })
     
-    # Ajouter les poids
+    # Add weights
     weights_array = np.array(diagnostics['weights_history'])
     for i in range(weights_array.shape[1]):
         df[f'weight_expert_{i+1}'] = weights_array[:, i]
     
-    # Sauvegarder
+    # Save
     df.to_csv('results/earcp_results.csv', index=False)
     
     return df
 
-# Générer les rapports
+# Generate reports
 report = generate_report(ensemble, diagnostics, predictions, targets)
 df_results = create_results_dataframe(diagnostics, predictions, targets)
 
-print("Rapports générés:")
+print("Reports generated:")
 print("  - reports/earcp_report.json")
 print("  - results/earcp_results.csv")
 ```
 
 ---
 
-## 💼 Cas d'Utilisation
+## 💼 Use Cases
 
-### 1. Prédiction de Séries Temporelles
+### 1. Time Series Forecasting
 
 ```python
 import numpy as np
 from earcp import EARCP
 
-# Différents types d'experts pour séries temporelles
+# Different types of time series experts
 class MovingAverageExpert:
-    """Expert basé sur moyenne mobile."""
+    """Moving average based expert."""
     def __init__(self, window_size):
         self.window = window_size
         self.history = []
@@ -1356,7 +1359,7 @@ class MovingAverageExpert:
         return np.mean(self.history, axis=0)
 
 class ExponentialSmoothingExpert:
-    """Expert basé sur lissage exponentiel."""
+    """Exponential smoothing based expert."""
     def __init__(self, alpha=0.3):
         self.alpha = alpha
         self.last_value = None
@@ -1371,7 +1374,7 @@ class ExponentialSmoothingExpert:
         return prediction
 
 class TrendExpert:
-    """Expert basé sur extrapolation de tendance."""
+    """Trend extrapolation based expert."""
     def __init__(self):
         self.history = []
     
@@ -1380,15 +1383,15 @@ class TrendExpert:
         if len(self.history) < 3:
             return x
         
-        # Régression linéaire sur les dernières valeurs
+        # Linear regression on recent values
         recent = np.array(self.history[-5:])
         t = np.arange(len(recent))
         coeffs = np.polyfit(t, recent, deg=1)
-        # Extrapoler
+        # Extrapolate
         next_t = len(recent)
         return coeffs[0] * next_t + coeffs[1]
 
-# Créer l'ensemble
+# Create ensemble
 experts = [
     MovingAverageExpert(window_size=5),
     MovingAverageExpert(window_size=10),
@@ -1400,47 +1403,47 @@ experts = [
 
 ensemble = EARCP(experts=experts, beta=0.7)
 
-# Simulation de série temporelle
+# Time series simulation
 T = 1000
 for t in range(T):
-    # Valeur actuelle (avec saisonnalité et bruit)
+    # Current value (with seasonality and noise)
     x = np.sin(t * 0.1) + 0.01 * t + np.random.normal(0, 0.1)
     
-    # Prédiction
+    # Prediction
     pred, expert_preds = ensemble.predict(np.array([x]))
     
-    # Vraie valeur future (t+1)
+    # True future value (t+1)
     target = np.sin((t+1) * 0.1) + 0.01 * (t+1) + np.random.normal(0, 0.1)
     
-    # Mise à jour
+    # Update
     ensemble.update(expert_preds, np.array([target]))
 ```
 
-### 2. Trading et Finance
+### 2. Trading & Finance
 
 ```python
 import numpy as np
 from earcp import EARCP
 
-# Stratégies de trading diversifiées
+# Diversified trading strategies
 class MomentumStrategy:
-    """Suit les tendances de marché."""
+    """Follows market trends."""
     def __init__(self, lookback=20):
         self.lookback = lookback
         self.price_history = []
     
     def predict(self, market_state):
-        # market_state contient: prix, volume, indicateurs
+        # market_state contains: price, volume, indicators
         price = market_state['price']
         self.price_history.append(price)
         
         if len(self.price_history) < self.lookback:
-            return 0  # Position neutre
+            return 0  # Neutral position
         
         recent_prices = self.price_history[-self.lookback:]
         momentum = (recent_prices[-1] - recent_prices[0]) / recent_prices[0]
         
-        # Signal: 1 (achat), 0 (neutre), -1 (vente)
+        # Signal: 1 (buy), 0 (neutral), -1 (sell)
         if momentum > 0.02:
             return 1
         elif momentum < -0.02:
@@ -1448,7 +1451,7 @@ class MomentumStrategy:
         return 0
 
 class MeanReversionStrategy:
-    """Parie sur le retour à la moyenne."""
+    """Bets on return to mean."""
     def __init__(self, lookback=30):
         self.lookback = lookback
         self.price_history = []
@@ -1467,15 +1470,15 @@ class MeanReversionStrategy:
         # Z-score
         z_score = (price - mean_price) / (std_price + 1e-10)
         
-        # Signal inverse du z-score
+        # Signal inverse to z-score
         if z_score > 2:
-            return -1  # Suracheté -> vendre
+            return -1  # Overbought -> sell
         elif z_score < -2:
-            return 1   # Survendu -> acheter
+            return 1   # Oversold -> buy
         return 0
 
 class VolatilityStrategy:
-    """Adapte la position à la volatilité."""
+    """Adapts position to volatility."""
     def __init__(self):
         self.returns_history = []
     
@@ -1490,12 +1493,12 @@ class VolatilityStrategy:
         volatility = np.std(recent_returns)
         mean_return = np.mean(recent_returns)
         
-        # Plus la volatilité est faible, plus on peut être agressif
+        # Lower volatility = can be more aggressive
         if volatility < 0.01:
-            return np.sign(mean_return)  # Signal directionnel
-        return 0  # Rester neutre en haute volatilité
+            return np.sign(mean_return)  # Directional signal
+        return 0  # Stay neutral in high volatility
 
-# Créer l'ensemble de stratégies
+# Create strategy ensemble
 strategies = [
     MomentumStrategy(lookback=10),
     MomentumStrategy(lookback=30),
@@ -1506,55 +1509,55 @@ strategies = [
 
 ensemble = EARCP(experts=strategies, beta=0.75)
 
-# Simulation de trading
+# Trading simulation
 portfolio_value = 100000
 position = 0
 price_history = []
 
 for day in range(500):
-    # Simuler le marché
+    # Simulate market
     price = 100 + 10 * np.sin(day * 0.1) + np.random.normal(0, 1)
     price_history.append(price)
     
-    # État du marché
+    # Market state
     market_state = {
         'price': price,
         'return': (price - price_history[-2]) / price_history[-2] if len(price_history) > 1 else 0
     }
     
-    # Obtenir le signal d'ensemble
+    # Get ensemble signal
     signal, strategy_signals = ensemble.predict(market_state)
     
-    # Agréger le signal (-1, 0, 1)
+    # Aggregate signal (-1, 0, 1)
     aggregated_signal = np.mean(signal)
     
-    # Exécuter le trade
+    # Execute trade
     target_position = np.sign(aggregated_signal)
     if target_position != position:
-        # Calculer P&L
+        # Calculate P&L
         if position != 0:
             pnl = position * (price - entry_price)
             portfolio_value += pnl
         
-        # Nouvelle position
+        # New position
         position = target_position
         entry_price = price if position != 0 else 0
     
-    # Calculer le rendement réalisé pour mise à jour
+    # Calculate realized return for update
     daily_return = (price - price_history[-2]) / price_history[-2] if len(price_history) > 1 else 0
     realized_return = position * daily_return
     
-    # Mise à jour de l'ensemble (perte négative = gain)
-    ensemble.update(strategy_signals, np.array([-realized_return]))  # Négatif car on minimise la perte
+    # Update ensemble (negative loss = gain)
+    ensemble.update(strategy_signals, np.array([-realized_return]))  # Negative because we minimize loss
     
     if (day + 1) % 100 == 0:
-        print(f"Jour {day+1}: Portfolio = ${portfolio_value:.2f}, Position = {position}")
+        print(f"Day {day+1}: Portfolio = ${portfolio_value:.2f}, Position = {position}")
 
-print(f"\nValeur finale du portfolio: ${portfolio_value:.2f}")
-print(f"Rendement: {((portfolio_value - 100000) / 100000 * 100):.2f}%")
+print(f"\nFinal portfolio value: ${portfolio_value:.2f}")
+print(f"Return: {((portfolio_value - 100000) / 100000 * 100):.2f}%")
 ```
 
-### 3. Classification Multi-Classes
+### 3. Multi-Class Classification
 
 ```python
 from sklearn.datasets import make_classification
@@ -1566,7 +1569,7 @@ from sklearn.naive_bayes import GaussianNB
 from earcp import EARCP
 from earcp.utils.wrappers import SklearnWrapper
 
-# Générer des données de classification
+# Generate classification data
 X, y = make_classification(
     n_samples=1000,
     n_features=20,
@@ -1579,7 +1582,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42
 )
 
-# Créer différents classifieurs
+# Create different classifiers
 classifiers = {
     'LogisticRegression': LogisticRegression(max_iter=1000),
     'SVM_linear': SVC(kernel='linear', probability=True),
@@ -1588,94 +1591,94 @@ classifiers = {
     'NaiveBayes': GaussianNB()
 }
 
-# Entraîner tous les classifieurs
+# Train all classifiers
 for name, clf in classifiers.items():
     clf.fit(X_train, y_train)
     train_acc = clf.score(X_train, y_train)
-    print(f"{name} - Précision train: {train_acc:.3f}")
+    print(f"{name} - Train accuracy: {train_acc:.3f}")
 
-# Créer les wrappers
+# Create wrappers
 experts = [SklearnWrapper(clf, name=name) 
            for name, clf in classifiers.items()]
 
-# Créer l'ensemble pour classification
+# Create ensemble for classification
 ensemble = EARCP(
     experts=experts,
     beta=0.7,
     prediction_mode='classification'
 )
 
-# Évaluation en ligne sur le test set
+# Online evaluation on test set
 correct = 0
 predictions = []
 true_labels = []
 
 for i, (x, y_true) in enumerate(zip(X_test, y_test)):
-    # Prédiction (retourne des probabilités)
+    # Prediction (returns probabilities)
     prob, expert_probs = ensemble.predict(x.reshape(1, -1))
     
-    # Classe prédite
+    # Predicted class
     y_pred = np.argmax(prob)
     predictions.append(y_pred)
     true_labels.append(y_true)
     
-    # Vérifier si correct
+    # Check if correct
     if y_pred == y_true:
         correct += 1
     
-    # One-hot encoding de la vraie classe
+    # One-hot encoding of true class
     target_onehot = np.zeros(3)
     target_onehot[y_true] = 1
     
-    # Mise à jour de l'ensemble
+    # Update ensemble
     ensemble.update(expert_probs, target_onehot.reshape(1, -1))
     
     if (i + 1) % 50 == 0:
         current_acc = correct / (i + 1)
-        print(f"Échantillon {i+1}: Précision = {current_acc:.3f}")
+        print(f"Sample {i+1}: Accuracy = {current_acc:.3f}")
 
-# Résultats finaux
+# Final results
 final_accuracy = correct / len(X_test)
 print(f"\n{'='*50}")
-print(f"Précision finale de l'ensemble: {final_accuracy:.3f}")
+print(f"Final ensemble accuracy: {final_accuracy:.3f}")
 print(f"{'='*50}")
 
-# Poids finaux des experts
+# Final expert weights
 final_weights = ensemble.get_weights()
 for name, weight in zip(classifiers.keys(), final_weights):
     print(f"{name}: {weight:.3f}")
 
-# Matrice de confusion
+# Confusion matrix
 from sklearn.metrics import confusion_matrix, classification_report
 cm = confusion_matrix(true_labels, predictions)
-print("\nMatrice de confusion:")
+print("\nConfusion matrix:")
 print(cm)
-print("\nRapport de classification:")
+print("\nClassification report:")
 print(classification_report(true_labels, predictions))
 ```
 
-### 4. Apprentissage par Renforcement
+### 4. Reinforcement Learning
 
 ```python
 import numpy as np
 from earcp import EARCP
 
-# Environnement simple: Multi-Armed Bandit
+# Simple environment: Multi-Armed Bandit
 class SimpleBanditEnv:
-    """Environnement de bandit à K bras."""
+    """K-armed bandit environment."""
     def __init__(self, k=10):
         self.k = k
-        # Vraies valeurs des bras (inconnues de l'agent)
+        # True arm values (unknown to agent)
         self.true_values = np.random.randn(k)
     
     def step(self, action):
-        """Tirer sur un bras et obtenir une récompense."""
+        """Pull an arm and get reward."""
         reward = self.true_values[action] + np.random.randn() * 0.1
         return reward
 
-# Agents RL avec différentes stratégies
+# RL agents with different strategies
 class EpsilonGreedyAgent:
-    """Agent epsilon-greedy."""
+    """Epsilon-greedy agent."""
     def __init__(self, n_actions, epsilon=0.1):
         self.n_actions = n_actions
         self.epsilon = epsilon
@@ -1683,23 +1686,23 @@ class EpsilonGreedyAgent:
         self.action_counts = np.zeros(n_actions)
     
     def predict(self, state):
-        """Retourne les Q-values."""
+        """Returns Q-values."""
         return self.q_values.copy()
     
     def select_action(self):
-        """Sélectionne une action."""
+        """Selects an action."""
         if np.random.random() < self.epsilon:
             return np.random.randint(self.n_actions)
         return np.argmax(self.q_values)
     
     def update_internal(self, action, reward):
-        """Mise à jour interne de l'agent."""
+        """Internal agent update."""
         self.action_counts[action] += 1
         alpha = 1.0 / self.action_counts[action]
         self.q_values[action] += alpha * (reward - self.q_values[action])
 
 class UCBAgent:
-    """Agent Upper Confidence Bound."""
+    """Upper Confidence Bound agent."""
     def __init__(self, n_actions, c=2.0):
         self.n_actions = n_actions
         self.c = c
@@ -1708,7 +1711,7 @@ class UCBAgent:
         self.t = 0
     
     def predict(self, state):
-        """Retourne les Q-values avec bonus d'exploration."""
+        """Returns Q-values with exploration bonus."""
         if self.t == 0:
             return self.q_values
         
@@ -1718,40 +1721,40 @@ class UCBAgent:
         return ucb_values
     
     def select_action(self):
-        """Sélectionne l'action avec le plus grand UCB."""
+        """Selects action with highest UCB."""
         return np.argmax(self.predict(None))
     
     def update_internal(self, action, reward):
-        """Mise à jour interne."""
+        """Internal update."""
         self.t += 1
         self.action_counts[action] += 1
         alpha = 1.0 / self.action_counts[action]
         self.q_values[action] += alpha * (reward - self.q_values[action])
 
 class ThompsonSamplingAgent:
-    """Agent Thompson Sampling (Bayésien)."""
+    """Thompson Sampling agent (Bayesian)."""
     def __init__(self, n_actions):
         self.n_actions = n_actions
-        self.alpha = np.ones(n_actions)  # Succès
-        self.beta = np.ones(n_actions)   # Échecs
+        self.alpha = np.ones(n_actions)  # Successes
+        self.beta = np.ones(n_actions)   # Failures
     
     def predict(self, state):
-        """Sample des distributions Beta."""
+        """Sample from Beta distributions."""
         samples = np.random.beta(self.alpha, self.beta)
         return samples
     
     def select_action(self):
-        """Sélectionne selon le sample."""
+        """Selects according to sample."""
         return np.argmax(self.predict(None))
     
     def update_internal(self, action, reward):
-        """Mise à jour Bayésienne."""
-        # Convertir reward en [0, 1]
-        normalized_reward = (reward + 3) / 6  # Supposant reward in [-3, 3]
+        """Bayesian update."""
+        # Convert reward to [0, 1]
+        normalized_reward = (reward + 3) / 6  # Assuming reward in [-3, 3]
         self.alpha[action] += normalized_reward
         self.beta[action] += (1 - normalized_reward)
 
-# Créer l'environnement et les agents
+# Create environment and agents
 env = SimpleBanditEnv(k=10)
 agents = [
     EpsilonGreedyAgent(n_actions=10, epsilon=0.1),
@@ -1760,53 +1763,53 @@ agents = [
     ThompsonSamplingAgent(n_actions=10)
 ]
 
-# Créer l'ensemble RL
+# Create RL ensemble
 ensemble = EARCP(experts=agents, beta=0.8)
 
-# Boucle d'apprentissage
+# Learning loop
 T = 1000
 total_reward = 0
 optimal_actions = 0
 optimal_action = np.argmax(env.true_values)
 
 for t in range(T):
-    # Obtenir les Q-values de tous les agents
-    state = None  # Pas d'état dans les bandits
+    # Get Q-values from all agents
+    state = None  # No state in bandits
     ensemble_q_values, agent_q_values = ensemble.predict(state)
     
-    # Sélectionner l'action (argmax de l'ensemble)
+    # Select action (argmax of ensemble)
     action = np.argmax(ensemble_q_values)
     
-    # Exécuter l'action
+    # Execute action
     reward = env.step(action)
     total_reward += reward
     
     if action == optimal_action:
         optimal_actions += 1
     
-    # Mettre à jour l'ensemble (utilise les Q-values comme "prédictions")
-    # Target: reward observé pour l'action choisie
+    # Update ensemble (uses Q-values as "predictions")
+    # Target: observed reward for chosen action
     target_q_values = ensemble_q_values.copy()
     target_q_values[action] = reward
     
     ensemble.update(agent_q_values, target_q_values)
     
-    # Mettre à jour les agents individuellement aussi
+    # Update individual agents too
     for agent in agents:
         agent.update_internal(action, reward)
     
     if (t + 1) % 200 == 0:
         avg_reward = total_reward / (t + 1)
         optimality = optimal_actions / (t + 1)
-        print(f"Étape {t+1}: Récompense moyenne = {avg_reward:.3f}, " 
-              f"Optimalité = {optimality:.2%}")
+        print(f"Step {t+1}: Avg reward = {avg_reward:.3f}, " 
+              f"Optimality = {optimality:.2%}")
 
 print(f"\n{'='*50}")
-print(f"Récompense totale: {total_reward:.2f}")
-print(f"Pourcentage d'actions optimales: {optimal_actions/T:.2%}")
+print(f"Total reward: {total_reward:.2f}")
+print(f"Optimal action percentage: {optimal_actions/T:.2%}")
 print(f"{'='*50}")
 
-# Poids finaux
+# Final weights
 final_weights = ensemble.get_weights()
 agent_names = ['ε-greedy (0.1)', 'ε-greedy (0.05)', 'UCB', 'Thompson']
 for name, weight in zip(agent_names, final_weights):
@@ -1817,7 +1820,7 @@ for name, weight in zip(agent_names, final_weights):
 
 ## 📖 API Reference
 
-### Classe Principale: EARCP
+### Main Class: EARCP
 
 ```python
 class EARCP(experts, config=None, **kwargs)
@@ -1825,115 +1828,115 @@ class EARCP(experts, config=None, **kwargs)
 
 Ensemble Auto-Régulé par Cohérence et Performance.
 
-**Paramètres:**
+**Parameters:**
 
-- `experts` (list): Liste de modèles experts. Chaque expert doit implémenter une méthode `.predict(x)`.
+- `experts` (list): List of expert models. Each expert must implement a `.predict(x)` method.
   
-- `config` (EARCPConfig, optional): Objet de configuration. Si None, utilise les valeurs par défaut ou celles fournies dans `**kwargs`.
+- `config` (EARCPConfig, optional): Configuration object. If None, uses default values or those provided in `**kwargs`.
   
-- `**kwargs`: Paramètres de configuration supplémentaires (alpha_P, alpha_C, beta, eta_s, w_min, etc.)
+- `**kwargs`: Additional configuration parameters (alpha_P, alpha_C, beta, eta_s, w_min, etc.)
 
-**Méthodes Principales:**
+**Main Methods:**
 
 #### `predict(x, return_expert_predictions=True)`
 
-Fait une prédiction d'ensemble pour l'entrée `x`.
+Make ensemble prediction for input `x`.
 
-**Paramètres:**
-- `x` (array-like): Entrée pour la prédiction
-- `return_expert_predictions` (bool): Si True, retourne aussi les prédictions individuelles
+**Parameters:**
+- `x` (array-like): Input for prediction
+- `return_expert_predictions` (bool): If True, also returns individual predictions
 
-**Retourne:**
-- `prediction` (np.ndarray): Prédiction pondérée de l'ensemble
-- `expert_predictions` (list, optional): Liste des prédictions individuelles
+**Returns:**
+- `prediction` (np.ndarray): Weighted ensemble prediction
+- `expert_predictions` (list, optional): List of individual predictions
 
-**Exemple:**
+**Example:**
 ```python
 pred, expert_preds = ensemble.predict(x)
 ```
 
 #### `update(expert_predictions, target)`
 
-Met à jour l'ensemble après observation de la cible.
+Update ensemble after observing target.
 
-**Paramètres:**
-- `expert_predictions` (list): Prédictions des experts (retournées par `predict`)
-- `target` (array-like): Valeur cible observée
+**Parameters:**
+- `expert_predictions` (list): Expert predictions (returned by `predict`)
+- `target` (array-like): Observed target value
 
-**Retourne:**
-- `metrics` (dict): Dictionnaire contenant:
-  - `'weights'`: Poids mis à jour
-  - `'performance_scores'`: Scores de performance
-  - `'coherence_scores'`: Scores de cohérence
-  - `'ensemble_loss'`: Perte de l'ensemble
+**Returns:**
+- `metrics` (dict): Dictionary containing:
+  - `'weights'`: Updated weights
+  - `'performance_scores'`: Performance scores
+  - `'coherence_scores'`: Coherence scores
+  - `'ensemble_loss'`: Ensemble loss
 
-**Exemple:**
+**Example:**
 ```python
 metrics = ensemble.update(expert_preds, target)
 ```
 
 #### `get_weights()`
 
-Retourne les poids actuels des experts.
+Returns current expert weights.
 
-**Retourne:**
-- `weights` (np.ndarray): Tableau des poids normalisés
+**Returns:**
+- `weights` (np.ndarray): Array of normalized weights
 
-**Exemple:**
+**Example:**
 ```python
 weights = ensemble.get_weights()
 ```
 
 #### `get_diagnostics()`
 
-Retourne les diagnostics complets de l'ensemble.
+Returns complete ensemble diagnostics.
 
-**Retourne:**
-- `diagnostics` (dict): Dictionnaire contenant toutes les métriques et historiques
+**Returns:**
+- `diagnostics` (dict): Dictionary containing all metrics and histories
 
-**Exemple:**
+**Example:**
 ```python
 diag = ensemble.get_diagnostics()
-print(f"Entropie: {diag['entropy']:.3f}")
+print(f"Entropy: {diag['entropy']:.3f}")
 ```
 
 #### `reset(initial_weights=None)`
 
-Réinitialise l'ensemble à l'état initial.
+Reset ensemble to initial state.
 
-**Paramètres:**
-- `initial_weights` (array-like, optional): Poids initiaux. Si None, utilise des poids uniformes.
+**Parameters:**
+- `initial_weights` (array-like, optional): Initial weights. If None, uses uniform weights.
 
-**Exemple:**
+**Example:**
 ```python
 ensemble.reset()
 ```
 
 #### `save_state(filepath)`
 
-Sauvegarde l'état complet de l'ensemble.
+Save complete ensemble state.
 
-**Paramètres:**
-- `filepath` (str): Chemin du fichier de sauvegarde
+**Parameters:**
+- `filepath` (str): Save file path
 
-**Exemple:**
+**Example:**
 ```python
 ensemble.save_state('checkpoint.pkl')
 ```
 
 #### `load_state(filepath)`
 
-Charge l'état de l'ensemble depuis un fichier.
+Load ensemble state from file.
 
-**Paramètres:**
-- `filepath` (str): Chemin du fichier à charger
+**Parameters:**
+- `filepath` (str): File path to load
 
-**Exemple:**
+**Example:**
 ```python
 ensemble.load_state('checkpoint.pkl')
 ```
 
-### Classe de Configuration: EARCPConfig
+### Configuration Class: EARCPConfig
 
 ```python
 class EARCPConfig(
@@ -1952,176 +1955,176 @@ class EARCPConfig(
 )
 ```
 
-Configuration pour EARCP.
+Configuration for EARCP.
 
-**Paramètres:**
+**Parameters:**
 
-- `alpha_P` (float): Facteur de lissage pour la performance [0, 1]
-- `alpha_C` (float): Facteur de lissage pour la cohérence [0, 1]
-- `beta` (float): Balance performance/cohérence [0, 1]
-- `eta_s` (float): Taux d'apprentissage/sensibilité > 0
-- `w_min` (float): Poids minimum [0, 1]
-- `loss_fn` (callable, optional): Fonction de perte personnalisée
-- `coherence_fn` (callable, optional): Fonction de cohérence personnalisée
-- `prediction_mode` (str): 'auto', 'regression', ou 'classification'
-- `epsilon` (float): Petite constante pour stabilité numérique
-- `normalize_weights` (bool): Normaliser les poids à somme=1
-- `track_diagnostics` (bool): Suivre l'historique complet
-- `random_state` (int, optional): Seed pour reproductibilité
+- `alpha_P` (float): Smoothing factor for performance [0, 1]
+- `alpha_C` (float): Smoothing factor for coherence [0, 1]
+- `beta` (float): Performance/coherence balance [0, 1]
+- `eta_s` (float): Learning rate/sensitivity > 0
+- `w_min` (float): Minimum weight [0, 1]
+- `loss_fn` (callable, optional): Custom loss function
+- `coherence_fn` (callable, optional): Custom coherence function
+- `prediction_mode` (str): 'auto', 'regression', or 'classification'
+- `epsilon` (float): Small constant for numerical stability
+- `normalize_weights` (bool): Normalize weights to sum=1
+- `track_diagnostics` (bool): Track complete history
+- `random_state` (int, optional): Seed for reproducibility
 
-### Fonctions Utilitaires
+### Utility Functions
 
 #### `get_preset_config(preset_name)`
 
-Obtient une configuration prédéfinie.
+Get a predefined configuration.
 
-**Paramètres:**
-- `preset_name` (str): Nom du preset ('default', 'performance_focused', etc.)
+**Parameters:**
+- `preset_name` (str): Preset name ('default', 'performance_focused', etc.)
 
-**Retourne:**
-- `config` (EARCPConfig): Configuration prédéfinie
+**Returns:**
+- `config` (EARCPConfig): Preset configuration
 
-**Presets disponibles:**
-- `'default'`: Configuration standard
-- `'performance_focused'`: Focus sur la performance
-- `'diversity_focused'`: Focus sur la diversité
-- `'balanced'`: Équilibre optimal
-- `'conservative'`: Changements prudents
-- `'aggressive'`: Changements rapides
-- `'robust'`: Robuste au bruit
-- `'high_performance'`: Performance maximale
+**Available presets:**
+- `'default'`: Standard configuration
+- `'performance_focused'`: Focus on performance
+- `'diversity_focused'`: Focus on diversity
+- `'balanced'`: Optimal balance
+- `'conservative'`: Prudent changes
+- `'aggressive'`: Fast changes
+- `'robust'`: Robust to noise
+- `'high_performance'`: Maximum performance
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Problème: Les poids convergent vers un seul expert
+### Issue: Weights converge to single expert
 
-**Symptôme:** Un expert obtient un poids proche de 1.0, les autres proches de 0.
+**Symptom:** One expert gets weight close to 1.0, others close to 0.
 
 **Solutions:**
 ```python
-# 1. Augmenter w_min
+# 1. Increase w_min
 ensemble = EARCP(experts=experts, w_min=0.15)
 
-# 2. Diminuer beta (favoriser la cohérence)
+# 2. Decrease beta (favor coherence)
 ensemble = EARCP(experts=experts, beta=0.5)
 
-# 3. Diminuer eta_s (changements plus doux)
+# 3. Decrease eta_s (softer changes)
 ensemble = EARCP(experts=experts, eta_s=3.0)
 
-# 4. Utiliser un preset robuste
+# 4. Use robust preset
 config = get_preset_config('diversity_focused')
 ensemble = EARCP(experts=experts, config=config)
 ```
 
-### Problème: Les poids oscillent beaucoup
+### Issue: Weights oscillate heavily
 
-**Symptôme:** Les poids changent de manière erratique.
+**Symptom:** Weights change erratically.
 
 **Solutions:**
 ```python
-# 1. Augmenter alpha_P et alpha_C (plus de mémoire)
+# 1. Increase alpha_P and alpha_C (more memory)
 ensemble = EARCP(experts=experts, alpha_P=0.95, alpha_C=0.90)
 
-# 2. Diminuer eta_s (moins de sensibilité)
+# 2. Decrease eta_s (less sensitivity)
 ensemble = EARCP(experts=experts, eta_s=2.0)
 
-# 3. Utiliser un preset conservateur
+# 3. Use conservative preset
 config = get_preset_config('conservative')
 ensemble = EARCP(experts=experts, config=config)
 ```
 
-### Problème: Performance inférieure au meilleur expert
+### Issue: Performance worse than best expert
 
-**Symptôme:** EARCP fait pire que le meilleur expert individuel.
+**Symptom:** EARCP performs worse than best individual expert.
 
-**Analyse et solutions:**
+**Analysis and solutions:**
 ```python
-# 1. Augmenter beta (plus de focus sur la performance)
+# 1. Increase beta (more focus on performance)
 ensemble = EARCP(experts=experts, beta=0.9)
 
-# 2. Vérifier que les experts sont diversifiés
-# Les experts trop similaires réduisent les bénéfices
+# 2. Check expert diversity
+# Too similar experts reduce benefits
 from earcp.utils.analysis import check_expert_diversity
 diversity_score = check_expert_diversity(experts, test_data)
 if diversity_score < 0.3:
-    print("Les experts sont trop similaires!")
+    print("Experts are too similar!")
 
-# 3. Augmenter la période d'adaptation
-# EARCP a besoin de temps pour apprendre
-# Vérifier la performance après au moins T > 100 étapes
+# 3. Increase adaptation period
+# EARCP needs time to learn
+# Check performance after at least T > 100 steps
 
-# 4. Vérifier les fonctions de perte et de cohérence
-# S'assurer qu'elles retournent des valeurs dans [0, 1]
+# 4. Verify loss and coherence functions
+# Ensure they return values in [0, 1]
 ```
 
-### Problème: NaN ou Inf dans les calculs
+### Issue: NaN or Inf in calculations
 
-**Symptôme:** Erreurs avec valeurs NaN ou infinies.
+**Symptom:** Errors with NaN or infinite values.
 
 **Solutions:**
 ```python
-# 1. Ajuster epsilon
+# 1. Adjust epsilon
 ensemble = EARCP(experts=experts, epsilon=1e-8)
 
-# 2. Normaliser les prédictions
+# 2. Normalize predictions
 class NormalizedExpert:
     def __init__(self, base_expert):
         self.base_expert = base_expert
     
     def predict(self, x):
         pred = self.base_expert.predict(x)
-        # Clip les valeurs extrêmes
+        # Clip extreme values
         return np.clip(pred, -1e6, 1e6)
 
-# 3. Vérifier les données d'entrée
+# 3. Check input data
 assert not np.any(np.isnan(x))
 assert not np.any(np.isinf(x))
 ```
 
-### Problème: Mémoire insuffisante avec beaucoup d'experts
+### Issue: Out of memory with many experts
 
-**Symptôme:** Out of memory avec M > 50 experts.
+**Symptom:** Out of memory with M > 50 experts.
 
 **Solutions:**
 ```python
-# 1. Désactiver le tracking de l'historique
+# 1. Disable history tracking
 config = EARCPConfig(track_diagnostics=False)
 ensemble = EARCP(experts=experts, config=config)
 
-# 2. Sauvegarder périodiquement et libérer la mémoire
+# 2. Periodic save and memory release
 if t % 1000 == 0:
     ensemble.save_state(f'checkpoint_{t}.pkl')
-    # Créer un nouvel ensemble depuis le checkpoint
+    # Create new ensemble from checkpoint
     ensemble = EARCP(experts=experts)
     ensemble.load_state(f'checkpoint_{t}.pkl')
 
-# 3. Utiliser un sous-ensemble d'experts
-# Sélectionner les K meilleurs périodiquement
+# 3. Use expert subset
+# Periodically select top K experts
 if t % 500 == 0:
     weights = ensemble.get_weights()
-    top_k_indices = np.argsort(weights)[-10:]  # Garder top 10
+    top_k_indices = np.argsort(weights)[-10:]  # Keep top 10
     experts = [experts[i] for i in top_k_indices]
     ensemble = EARCP(experts=experts)
 ```
 
-### Problème: Lent avec beaucoup d'experts
+### Issue: Slow with many experts
 
-**Symptôme:** Calcul très lent avec M > 20 experts.
+**Symptom:** Very slow computation with M > 20 experts.
 
 **Solutions:**
 ```python
-# 1. Utiliser des calculs vectorisés
-# S'assurer que les experts retournent des array NumPy
+# 1. Use vectorized calculations
+# Ensure experts return NumPy arrays
 
-# 2. Désactiver certaines fonctionnalités
+# 2. Disable certain features
 config = EARCPConfig(
-    track_diagnostics=False,  # Pas d'historique
-    normalize_weights=False   # Skip normalisation si pas nécessaire
+    track_diagnostics=False,  # No history
+    normalize_weights=False   # Skip normalization if unnecessary
 )
 
-# 3. Utiliser le multiprocessing pour les prédictions
+# 3. Use multiprocessing for predictions
 from multiprocessing import Pool
 
 def get_prediction(expert, x):
@@ -2135,80 +2138,80 @@ with Pool(processes=4) as pool:
 
 ## ❓ FAQ
 
-### Questions Générales
+### General Questions
 
-**Q: Combien d'experts minimum/maximum puis-je utiliser ?**
+**Q: What's the minimum/maximum number of experts?**
 
-**R:** Minimum 2 experts. Testé avec succès jusqu'à 50+ experts. Performance optimale avec 3-10 experts diversifiés. Au-delà de 20, considérez des approches hiérarchiques.
+**A:** Minimum 2 experts. Successfully tested up to 50+ experts. Optimal performance with 3-10 diverse experts. Beyond 20, consider hierarchical approaches.
 
-**Q: EARCP fonctionne-t-il avec des modèles pré-entraînés ?**
+**Q: Does EARCP work with pre-trained models?**
 
-**R:** Oui, parfaitement ! Utilisez les wrappers (`SklearnWrapper`, `TorchWrapper`, `KerasWrapper`) pour intégrer n'importe quel modèle pré-entraîné sans réentraînement.
+**A:** Yes, perfectly! Use wrappers (`SklearnWrapper`, `TorchWrapper`, `KerasWrapper`) to integrate any pre-trained model without retraining.
 
-**Q: Dois-je réentraîner mes experts ?**
+**Q: Do I need to retrain my experts?**
 
-**R:** Non. EARCP ne modifie jamais les experts. Il apprend uniquement comment les combiner optimalement.
+**A:** No. EARCP never modifies experts. It only learns how to combine them optimally.
 
-**Q: EARCP supporte-t-il le GPU ?**
+**Q: Does EARCP support GPU?**
 
-**R:** EARCP lui-même tourne sur CPU (très léger). Mais vos experts (ex: réseaux de neurones) peuvent utiliser le GPU normalement.
+**A:** EARCP itself runs on CPU (very lightweight). But your experts (e.g., neural networks) can use GPU normally.
 
-### Hyperparamètres
+### Hyperparameters
 
-**Q: Comment choisir beta ?**
+**Q: How to choose beta?**
 
-**R:** 
-- **β = 0.7-0.8** : Recommandé pour débuter
-- **β > 0.8** : Si vous avez confiance en vos métriques
-- **β < 0.7** : Pour favoriser la robustesse et la diversité
-- **β = 1.0** : Mode performance pure (équivalent à Hedge)
+**A:** 
+- **β = 0.7-0.8**: Recommended for starting
+- **β > 0.8**: If you trust your metrics
+- **β < 0.7**: To favor robustness and diversity
+- **β = 1.0**: Pure performance mode (equivalent to Hedge)
 
-**Q: Comment régler eta_s ?**
+**Q: How to tune eta_s?**
 
-**R:**
-- **eta_s = 3-4** : Environnement stable, changements lents
-- **eta_s = 5-6** : Défaut, environnement modéré
-- **eta_s = 7-9** : Environnement dynamique, adaptation rapide
+**A:**
+- **eta_s = 3-4**: Stable environment, slow changes
+- **eta_s = 5-6**: Default, moderate environment
+- **eta_s = 7-9**: Dynamic environment, fast adaptation
 
-**Q: Que fait w_min exactement ?**
+**Q: What does w_min do exactly?**
 
-**R:** `w_min` garantit qu'aucun expert ne sera complètement ignoré, même s'il performe mal. Cela permet une récupération si l'environnement change. Typiquement: `w_min = 1.0 / n_experts`.
+**A:** `w_min` ensures no expert is completely ignored, even if performing poorly. This allows recovery if environment changes. Typically: `w_min = 1.0 / n_experts`.
 
 ### Performance
 
-**Q: Quelle est la complexité temporelle ?**
+**Q: What's the time complexity?**
 
-**R:** O(M²) par étape pour M experts, principalement dû au calcul de la matrice de cohérence. Optimisations possibles pour M > 20.
+**A:** O(M²) per step for M experts, mainly due to coherence matrix computation. Optimizations possible for M > 20.
 
-**Q: EARCP est-il meilleur que le meilleur expert ?**
+**Q: Is EARCP better than the best expert?**
 
-**R:** EARCP garantit un regret O(√(T log M)), ce qui signifie qu'il converge asymptotiquement vers le meilleur expert. Sur le long terme (T grand), EARCP est au moins aussi bon que le meilleur expert.
+**A:** EARCP guarantees O(√(T log M)) regret, meaning it asymptotically converges to the best expert. In the long run (large T), EARCP is at least as good as the best expert.
 
-**Q: Combien de temps avant que EARCP converge ?**
+**Q: How long before EARCP converges?**
 
-**R:** Généralement 50-200 étapes pour voir une adaptation significative. La convergence dépend de:
-- Diversité des experts
-- Valeur de eta_s
-- Stabilité de l'environnement
+**A:** Generally 50-200 steps to see significant adaptation. Convergence depends on:
+- Expert diversity
+- eta_s value
+- Environment stability
 
-### Implémentation
+### Implementation
 
-**Q: EARCP supporte-t-il l'apprentissage par batch ?**
+**Q: Does EARCP support batch learning?**
 
-**R:** EARCP est conçu pour l'apprentissage en ligne séquentiel. Pour du batch, appelez simplement `update()` pour chaque échantillon dans le batch.
+**A:** EARCP is designed for sequential online learning. For batch, simply call `update()` for each sample in the batch.
 
-**Q: Puis-je ajouter/retirer des experts dynamiquement ?**
+**Q: Can I add/remove experts dynamically?**
 
-**R:** Actuellement non supporté directement. Vous devez créer un nouvel ensemble. Approche recommandée :
+**A:** Not directly supported currently. You must create a new ensemble. Recommended approach:
 ```python
-# Créer un nouvel ensemble avec les nouveaux experts
+# Create new ensemble with new experts
 new_ensemble = EARCP(experts=new_expert_list)
-# Optionnel: transférer les poids si applicable
+# Optional: transfer weights if applicable
 ```
 
-**Q: Comment gérer des experts qui retournent des formats différents ?**
+**Q: How to handle experts with different output formats?**
 
-**R:** Créez des classes wrapper pour standardiser les sorties:
+**A:** Create wrapper classes to standardize outputs:
 ```python
 class OutputWrapper:
     def __init__(self, expert, transform_fn):
@@ -2220,86 +2223,86 @@ class OutputWrapper:
         return self.transform(raw_output)
 ```
 
-### Cas d'Usage
+### Use Cases
 
-**Q: EARCP fonctionne-t-il pour la classification ?**
+**Q: Does EARCP work for classification?**
 
-**R:** Oui ! Utilisez `prediction_mode='classification'`. EARCP combinera les probabilités des classes et vous pouvez prendre l'argmax pour la prédiction finale.
+**A:** Yes! Use `prediction_mode='classification'`. EARCP will combine class probabilities and you can take argmax for final prediction.
 
-**Q: Puis-je utiliser EARCP pour du clustering ?**
+**Q: Can I use EARCP for clustering?**
 
-**R:** Oui, si vos experts produisent des assignations de clusters ou des probabilités d'appartenance. EARCP peut les combiner.
+**A:** Yes, if your experts produce cluster assignments or membership probabilities. EARCP can combine them.
 
-**Q: EARCP est-il adapté pour le traitement du langage naturel ?**
+**Q: Is EARCP suitable for NLP?**
 
-**R:** Oui, si vous avez plusieurs modèles de langage (BERT, GPT, etc.) produisant des embeddings ou des probabilités, EARCP peut les combiner intelligemment.
+**A:** Yes, if you have multiple language models (BERT, GPT, etc.) producing embeddings or probabilities, EARCP can combine them intelligently.
 
-**Q: Puis-je utiliser EARCP dans un environnement de production ?**
+**Q: Can I use EARCP in production?**
 
-**R:** Absolument ! EARCP est:
+**A:** Absolutely! EARCP is:
 - Production-ready
-- Testé extensivement
-- Faible overhead
-- Facile à monitorer
+- Extensively tested
+- Low overhead
+- Easy to monitor
 
-### Licence et Support
+### License and Support
 
-**Q: EARCP est-il gratuit ?**
+**Q: Is EARCP free?**
 
-**R:** 
-- **Gratuit** : Recherche académique, projets personnels, entreprises < $100k de revenu
-- **Commercial** : Licence requise pour entreprises > $100k
-- **Open-source** : Devient Apache 2.0 le 13 novembre 2029
+**A:** 
+- **Free**: Academic research, personal projects, companies < $100k revenue
+- **Commercial**: License required for companies > $100k
+- **Open-source**: Becomes Apache 2.0 on November 13, 2029
 
-**Q: Où obtenir de l'aide ?**
+**Q: Where to get help?**
 
-**R:**
+**A:**
 - Documentation: [README](https://github.com/Volgat/earcp)
-- Issues GitHub: https://github.com/Volgat/earcp/issues
+- GitHub Issues: https://github.com/Volgat/earcp/issues
 - Email: info@amewebstudio.com
 
-**Q: Puis-je contribuer ?**
+**Q: Can I contribute?**
 
-**R:** Oui ! Les contributions sont bienvenues. Voir [CONTRIBUTING.md](https://github.com/Volgat/earcp/blob/main/CONTRIBUTING.md).
+**A:** Yes! Contributions are welcome. See [CONTRIBUTING.md](https://github.com/Volgat/earcp/blob/main/CONTRIBUTING.md).
 
 ---
 
-## 📞 Support et Contact
+## 📞 Support and Contact
 
-### Obtenir de l'Aide
+### Get Help
 
 **Documentation:**
 - README: https://github.com/Volgat/earcp
 - Examples: https://github.com/Volgat/earcp/tree/main/examples
 - Tutorials: https://github.com/Volgat/earcp/wiki
 
-**Bugs et Issues:**
+**Bugs and Issues:**
 - GitHub Issues: https://github.com/Volgat/earcp/issues
-- Inclure: version, code minimal reproductible, messages d'erreur
+- Include: version, minimal reproducible code, error messages
 
 **Questions:**
-- Discussions GitHub: https://github.com/Volgat/earcp/discussions
+- GitHub Discussions: https://github.com/Volgat/earcp/discussions
 - Stack Overflow: Tag `earcp`
 
-### Contact Direct
+### Direct Contact
 
-**Auteur:** Mike Amega  
+**Author:** Mike Amega  
 **Email:** info@amewebstudio.com  
 **LinkedIn:** https://www.linkedin.com/in/mike-amega-486329184/  
 **GitHub:** [@Volgat](https://github.com/Volgat)  
 **Location:** Windsor, Ontario, Canada
 
-**Pour:**
-- 🏢 Licences commerciales
-- 🤝 Collaborations de recherche
-- 💼 Consulting et support technique
-- 🎓 Présentations et formations
+**For:**
+- 🏢 Commercial licenses
+- 🤝 Research collaborations
+- 💼 Consulting and technical support
+- 🎓 Presentations and training
 
 ---
 
 ## 📄 Citation
 
-Si vous utilisez EARCP dans vos travaux, veuillez citer:
+If you use EARCP in your work, please cite:
 
 ```bibtex
 @article{amega2025earcp,
@@ -2314,19 +2317,19 @@ Si vous utilisez EARCP dans vos travaux, veuillez citer:
 
 ---
 
-## 📜 Licence
+## 📜 License
 
-**Copyright © 2025 Mike Amega. Tous droits réservés.**
+**Copyright © 2025 Mike Amega. All rights reserved.**
 
-EARCP est distribué sous la **Business Source License 1.1**. Voir [LICENSE.md](https://github.com/Volgat/earcp/blob/main/LICENSE.md) pour les termes complets.
+EARCP is distributed under the **Business Source License 1.1**. See [LICENSE.md](https://github.com/Volgat/earcp/blob/main/LICENSE.md) for complete terms.
 
-**Résumé:**
-- ✅ Gratuit pour recherche, éducation, et usage interne (<$100k)
-- 💼 Licence commerciale requise pour entreprises >$100k
-- 🔓 Devient Apache 2.0 le 13 novembre 2029
+**Summary:**
+- ✅ Free for research, education, and internal use (<$100k)
+- 💼 Commercial license required for companies >$100k
+- 🔓 Becomes Apache 2.0 on November 13, 2029
 
 ---
 
-**Dernière mise à jour:** 3 décembre 2025  
-**Version du document:** 2.0  
-**Version EARCP:** 1.0.0
+**Last updated:** December 3, 2025  
+**Document version:** 2.0  
+**EARCP version:** 1.0.0
