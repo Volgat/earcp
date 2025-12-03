@@ -1,37 +1,49 @@
-# Installation Rapide - EARCP Python Library
+# Quick Install - EARCP Python Library
 
-## ⚠️ Important: Nom de Branche
+## ⚠️ Important: Branch Name
 
-La bibliothèque Python est sur la branche:
+The Python library is on the branch:
 ```
 earcp-lib
 ```
 
-## 🚀 Installation Simple (3 Étapes)
+## 🚀 Simple Installation (3 Steps)
 
-### Étape 1: Cloner
+### Step 1: Clone
 ```bash
 git clone https://github.com/Volgat/earcp.git
 cd earcp
 ```
 
-### Étape 2: Basculer sur la bonne branche
+### Step 2: Switch to the Library Branch
 ```bash
 git checkout earcp-lib
 ```
 
-### Étape 3: Installer
+### Step 3: Install
 ```bash
 pip install -e .
 ```
 
-## ✅ Vérification
+## 📦 Alternative: Direct Installation from GitHub
 
 ```bash
-python -c "from earcp import EARCP; print('✓ Installation réussie!')"
+pip install git+https://github.com/Volgat/earcp.git@earcp-lib
 ```
 
-## 🧪 Test Rapide
+## 📦 Easiest: Install from PyPI
+
+```bash
+pip install earcp
+```
+
+## ✅ Verify Installation
+
+```bash
+python -c "from earcp import EARCP; print('✓ Installation successful!')"
+```
+
+## 🧪 Quick Test
 
 ```python
 from earcp import EARCP
@@ -40,10 +52,11 @@ import numpy as np
 class Expert:
     def __init__(self, factor):
         self.factor = factor
+    
     def predict(self, x):
         return self.factor * x
 
-# Créer l'ensemble
+# Create ensemble
 experts = [Expert(1.0), Expert(2.0), Expert(1.5)]
 ensemble = EARCP(experts=experts)
 
@@ -54,52 +67,104 @@ for t in range(20):
     pred, expert_preds = ensemble.predict(x)
     ensemble.update(expert_preds, target)
 
-print("Poids finaux:", ensemble.get_weights())
-# L'expert avec factor=1.5 devrait avoir le poids le plus élevé
+print("Final weights:", ensemble.get_weights())
+# Expert with factor=1.5 should have the highest weight
 ```
 
-## 📦 Installation Directe (Alternative)
+## 🔧 Troubleshooting
 
-```bash
-pip install git+https://github.com/Volgat/earcp.git@earcp-lib
-```
-
-## 🔧 Résolution de Problèmes
-
-### Erreur: "does not appear to be a Python project"
-**Cause**: Vous êtes sur la mauvaise branche
+### Error: "does not appear to be a Python project"
+**Cause**: You are on the wrong branch  
 **Solution**:
 ```bash
 git checkout earcp-lib
 ```
 
-### Erreur: "No module named 'numpy'"
+### Error: "No module named 'numpy'"
 **Solution**:
 ```bash
 pip install numpy scipy matplotlib
 ```
 
-## 📚 Documentation Complète
+### Error: "No module named 'earcp'"
+**Solution**:
+```bash
+# Make sure you installed the package
+pip install earcp
 
-- **Installation détaillée**: [INSTALLATION.md](INSTALLATION.md)
-- **Guide de la bibliothèque**: [LIBRARY_README.md](LIBRARY_README.md)
-- **Démarrage rapide**: [docs/QUICKSTART.md](docs/QUICKSTART.md)
-- **Documentation complète**: [docs/USAGE.md](docs/USAGE.md)
+# Or if installing from source
+cd earcp
+git checkout earcp-lib
+pip install -e .
+```
 
-## 💡 Exemples
+## 📚 Complete Documentation
+
+- **Detailed Installation**: [INSTALLATION.md](INSTALLATION.md)
+- **Library Guide**: [LIBRARY_README.md](LIBRARY_README.md)
+- **Quick Start**: [docs/QUICKSTART.md](docs/QUICKSTART.md)
+- **Complete Documentation**: [docs/USAGE.md](docs/USAGE.md)
+
+## 💡 Examples
 
 ```bash
-# Exemple basique
+# Basic example
 python examples/basic_usage.py
 
-# Intégration avec scikit-learn
+# Integration with scikit-learn
 python examples/sklearn_integration.py
 
-# Visualisations
+# Visualizations
 python examples/visualization_example.py
 ```
 
+## 🌐 Installation Options Comparison
+
+| Method | Command | Best For |
+|--------|---------|----------|
+| **PyPI** | `pip install earcp` | Production use |
+| **GitHub Direct** | `pip install git+https://...@earcp-lib` | Latest version |
+| **Local Development** | `git clone` + `pip install -e .` | Contributing |
+
+## 📦 Optional Dependencies
+
+### Full Installation (includes all features)
+```bash
+pip install earcp[full]
+```
+
+### Scikit-learn Integration
+```bash
+pip install earcp[sklearn]
+```
+
+### PyTorch Integration
+```bash
+pip install earcp[torch]
+```
+
+### Development Tools
+```bash
+pip install earcp[dev]
+```
+
+## 📜 License
+
+**Business Source License 1.1**
+
+- ✅ **Free** for academic research, personal projects, and businesses with revenue < $100,000/year
+- 💼 **Commercial license required** for businesses with revenue ≥ $100,000/year
+
+**Contact for commercial licensing**: info@amewebstudio.com
+
+Full license: [LICENSE.md](LICENSE.md)
+
 ---
 
-**Version**: 1.0.0
-**Copyright**: © 2025 Mike Amega
+**Version**: 1.0.0  
+**Copyright**: © 2025 Mike Amega  
+**License**: Business Source License 1.1
+
+**Need help?** 
+- Open an issue: https://github.com/Volgat/earcp/issues
+- Email: info@amewebstudio.com
