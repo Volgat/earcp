@@ -1,0 +1,164 @@
+═══════════════════════════════════════════════════════════════════════════════
+                  INSTALLATION EARCP POUR WINDOWS
+═══════════════════════════════════════════════════════════════════════════════
+
+MÉTHODE 1: INSTALLATION LOCALE (RECOMMANDÉE)
+───────────────────────────────────────────────────────────────────────────────
+
+1. Ouvrez PowerShell ou CMD
+
+2. Naviguez vers votre dossier Downloads:
+   cd C:\Users\mikea\Downloads
+
+3. Clonez le dépôt:
+   git clone https://github.com/Volgat/earcp.git
+
+4. Entrez dans le dossier:
+   cd earcp
+
+5. Basculez sur la BONNE branche (IMPORTANT!):
+   git checkout earcp-lib
+
+6. Vérifiez que setup.py existe:
+   dir setup.py
+
+   Vous devriez voir: setup.py
+
+7. Installez:
+   pip install -e .
+
+8. Vérifiez l'installation:
+   python -c "from earcp import EARCP; print('Installation réussie!')"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+MÉTHODE 2: INSTALLATION DIRECTE (UNE SEULE LIGNE)
+───────────────────────────────────────────────────────────────────────────────
+
+Dans PowerShell ou CMD:
+
+pip install git+https://github.com/Volgat/earcp.git@earcp-lib
+
+Puis testez:
+python -c "from earcp import EARCP; print('OK!')"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COPIER-COLLER RAPIDE (Toutes les étapes en UNE commande)
+───────────────────────────────────────────────────────────────────────────────
+
+cd C:\Users\mikea\Downloads && git clone https://github.com/Volgat/earcp.git && cd earcp && git checkout earcp-lib && pip install -e .
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST RAPIDE
+───────────────────────────────────────────────────────────────────────────────
+
+Créez un fichier test_earcp.py:
+
+# test_earcp.py
+from earcp import EARCP
+import numpy as np
+
+class Expert:
+    def __init__(self, factor):
+        self.factor = factor
+    def predict(self, x):
+        return self.factor * x
+
+experts = [Expert(1.0), Expert(2.0), Expert(1.5)]
+ensemble = EARCP(experts=experts)
+
+print("Poids initiaux:", ensemble.get_weights())
+
+for t in range(30):
+    x = np.array([t * 0.1])
+    target = np.array([1.5 * t * 0.1])
+    pred, expert_preds = ensemble.predict(x)
+    ensemble.update(expert_preds, target)
+
+print("Poids finaux:", ensemble.get_weights())
+print("L'expert avec factor=1.5 devrait avoir le poids le plus élevé!")
+
+Puis exécutez:
+python test_earcp.py
+
+═══════════════════════════════════════════════════════════════════════════════
+
+RÉSOLUTION DE PROBLÈMES
+───────────────────────────────────────────────────────────────────────────────
+
+PROBLÈME: "does not appear to be a Python project"
+CAUSE: Vous êtes sur la mauvaise branche
+SOLUTION:
+   git checkout earcp-lib
+   dir setup.py
+   pip install -e .
+
+───────────────────────────────────────────────────────────────────────────────
+
+PROBLÈME: "ModuleNotFoundError: No module named 'numpy'"
+SOLUTION:
+   pip install numpy scipy matplotlib
+
+───────────────────────────────────────────────────────────────────────────────
+
+PROBLÈME: "Permission denied"
+SOLUTION: Utilisez un environnement virtuel:
+   python -m venv env
+   env\Scripts\activate
+   pip install -e .
+
+═══════════════════════════════════════════════════════════════════════════════
+
+APRÈS L'INSTALLATION
+───────────────────────────────────────────────────────────────────────────────
+
+• Testez les exemples:
+  python examples\basic_usage.py
+  python examples\sklearn_integration.py
+  python examples\visualization_example.py
+
+• Lisez la documentation:
+  - INSTALL_QUICK.md      (Guide rapide)
+  - LIBRARY_README.md     (Vue d'ensemble)
+  - docs\QUICKSTART.md    (Démarrage 5 min)
+  - docs\USAGE.md         (Documentation complète)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+UTILISATION DANS VOS PROJETS
+───────────────────────────────────────────────────────────────────────────────
+
+Une fois installé, dans votre code Python:
+
+from earcp import EARCP
+
+# Vos modèles
+experts = [model1, model2, model3]
+
+# Créer l'ensemble
+ensemble = EARCP(experts=experts, beta=0.7)
+
+# Utiliser
+for x, y in data:
+    pred, expert_preds = ensemble.predict(x)
+    ensemble.update(expert_preds, y)
+
+# Résultats
+diagnostics = ensemble.get_diagnostics()
+print("Poids finaux:", diagnostics['weights'])
+
+═══════════════════════════════════════════════════════════════════════════════
+
+SUPPORT
+───────────────────────────────────────────────────────────────────────────════
+
+Email: info@amewebstudio.com
+GitHub: https://github.com/Volgat/earcp
+Documentation: Voir fichiers .md dans le dossier earcp/
+
+═══════════════════════════════════════════════════════════════════════════════
+                              Version: 1.0.0
+                     Copyright © 2025 Mike Amega
+═══════════════════════════════════════════════════════════════════════════════
