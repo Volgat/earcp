@@ -62,7 +62,7 @@ cd earcp
 pip install -e .
 ```
 
-### From PyPI (Coming Soon)
+### From PyPI 
 
 ```bash
 pip install earcp
