@@ -39,7 +39,7 @@ setup(
         'Source': 'https://github.com/Volgat/earcp/tree/earcp-lib',
         'Bug Reports': 'https://github.com/Volgat/earcp/issues',
         'License': 'https://github.com/Volgat/earcp/blob/main/LICENSE.md',
-        'Commercial Licensing': 'mailto:info@amewebstudio.com',
+        'Commercial Licensing': 'https://github.com/Volgat/earcp/blob/earcp-lib/LICENSE',
     },
     packages=find_packages(),
     classifiers=[
