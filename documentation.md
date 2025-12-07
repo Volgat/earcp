@@ -54,15 +54,15 @@ EARCP continually evaluates the *Coherence* (do the trajectories agree?) and *Pe
 
 ```mermaid
 graph LR
-    Input[Target Coordinates] --> ExpSpeed[Speed Controller]
-    Input --> ExpPrec[Precision Controller]
-    Input --> ExpSafe[Safety Controller]
+    Input["Target Coordinates"] --> ExpSpeed["Speed Controller"]
+    Input --> ExpPrec["Precision Controller"]
+    Input --> ExpSafe["Safety Controller"]
     
     ExpSpeed --> EARCP
     ExpPrec --> EARCP
     ExpSafe --> EARCP
     
-    EARCP -- "Dynamic Weighting" --> Output[Final Motor Command]
+    EARCP -- "Dynamic Weighting" --> Output["Final Motor Command"]
     style Output fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
@@ -83,15 +83,15 @@ Self-driving cars must process perception data, legal constraints, and passenger
 
 ```mermaid
 graph TD
-    SensorData --> Perception
-    MapData --> Regulation
-    IMUData --> Comfort
+    SensorData["Sensor Data"] --> Perception["Perception Expert"]
+    MapData["Map Data"] --> Regulation["Regulation Expert"]
+    IMUData["IMU Data"] --> Comfort["Comfort Expert"]
     
-    Perception -- "Obstacle Detected" --> EARCP
+    Perception -- "Obstacle Detected" --> EARCP["EARCP Core"]
     Regulation -- "Legal Constraint" --> EARCP
     Comfort -- "Smooth Trajectory" --> EARCP
     
-    EARCP -- "Conflict Resolution" --> Actuators
+    EARCP -- "Conflict Resolution" --> Actuators["Vehicle Actuators"]
 ```
 
 ### 3. Medicine: Diagnostic Reliability
@@ -108,15 +108,15 @@ If the Symptom Expert suggests "Condition X" but the Lab Expert strongly contrad
 
 ```mermaid
 graph TD
-    PatientData --> SymptomExp[Symptom Analysis]
-    PatientData --> LabExp[Lab Results Analysis]
-    PatientData --> HistExp[History Cross-Check]
+    PatientData --> SymptomExp["Symptom Analysis"]
+    PatientData --> LabExp["Lab Results Analysis"]
+    PatientData --> HistExp["History Cross-Check"]
     
     SymptomExp --> EARCP
     LabExp --> EARCP
     HistExp --> EARCP
     
-    EARCP -- "Weighted Diagnosis + Confidence Score" --> Doctorreport
+    EARCP -- "Weighted Diagnosis" --> Doctorreport
 ```
 
 ### 4. Advanced LLM Agents

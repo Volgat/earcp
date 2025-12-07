@@ -66,3 +66,4 @@ site/
 # Keep example outputs
 !examples/*.png
 !docs/images/*.png
+!images/*.png
