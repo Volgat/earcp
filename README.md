@@ -9,7 +9,7 @@
 
 **Author:** Mike Amega  
 **Affiliation:** Independent Researcher  
-**Contact:** info@amewebstudio.com  
+**Contact:** amewebstudio35@gmail.com  
 **private:** mikeamega910@gmail.com
 **LinkedIn:** https://www.linkedin.com/in/mike-amega-486329184/  
 **Disclosure Date:** November 13, 2025
@@ -354,7 +354,7 @@ Location: Ontario, Canada
 GitHub: [@Volgat](https://github.com/Volgat)
 
 ### For Commercial Licensing Inquiries
-**Email:** info@amewebstudio.com  
+**Email:** amewebstudio35@gmail.com  
 **Subject:** "EARCP Commercial License Inquiry"
 
 ### For Research Collaboration
