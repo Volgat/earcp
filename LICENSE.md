@@ -70,7 +70,7 @@ TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS PROVIDED ON AN "
 - Use EARCP in production systems serving external customers
 
 #### Contact for Commercial Licensing:
-**Email:** info@amewebstudio.com  
+**Email:** amewebstudio35@gmail.com  
 **Subject:** "EARCP Commercial License Inquiry"
 
 ---
@@ -173,7 +173,7 @@ The Licensor reserves the right to release the Licensed Work under different lic
 ## Contact Information
 
 **Licensor:** Mike Amega  
-**Email:** info@amewebstudio.com  
+**Email:** amewebstudio35@gmail.com  
 **Website:** https://github.com/Volgat/earcp  
 **LinkedIn:** https://www.linkedin.com/in/mike-amega-486329184/
 
