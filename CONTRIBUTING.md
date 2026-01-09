@@ -867,11 +867,11 @@ By submitting a contribution, you agree that:
 
 **For questions and discussions:**
 - 💬 **GitHub Discussions**: https://github.com/Volgat/earcp/discussions
-- 📧 **Email**: info@amewebstudio.com
+- 📧 **Email**: amewebstudio35@gmail.com
 - 🐛 **Bug Reports**: https://github.com/Volgat/earcp/issues
 
 **For urgent security issues:**
-- 🔒 **Security Email**: info@amewebstudio.com (mark subject as "SECURITY")
+- 🔒 **Security Email**: amewebstudio35@gmail.com (mark subject as "SECURITY")
 
 ---
 
