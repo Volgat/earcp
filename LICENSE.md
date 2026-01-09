@@ -160,7 +160,7 @@ Violations of this License may result in:
 - Claims for damages
 - Injunctive relief
 
-If you become aware of any violations of this License, please report them to: **info@amewebstudio.com**
+If you become aware of any violations of this License, please report them to: **amewebstudio35@gmail.com**
 
 ---
 
