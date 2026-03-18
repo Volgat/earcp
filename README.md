@@ -243,13 +243,15 @@ For complete license terms, see [LICENSE.md](LICENSE.md)
 If you use EARCP in academic work, please cite:
 
 ```bibtex
-@article{amega2025earcp,
-  title={EARCP: Ensemble Auto-Régulé par Cohérence et Performance},
+@article{amega2026earcp,
+  title={EARCP: Ensemble Auto-R{\'e}gul{\'e} par Coh{\'e}rence et Performance -- 
+         A Self-Regulating Coherence-Aware Ensemble Architecture 
+         for Sequential Decision Making},
   author={Amega, Mike},
-  journal={arXiv preprint},
-  year={2025},
-  url={https://github.com/Volgat/earcp},
-  note={Prior art established November 13, 2025}
+  journal={arXiv preprint arXiv:2603.14651},
+  year={2026},
+  url={https://arxiv.org/abs/2603.14651},
+  note={Independent Researcher, Windsor, Ontario, Canada}
 }
 ```
 
@@ -258,13 +260,15 @@ If you use EARCP in academic work, please cite:
 For technical implementations:
 
 ```bibtex
-@techreport{amega2025earcp_tech,
+@techreport{amega2026earcp_tech,
   title={EARCP: Technical Whitepaper and Implementation Specification},
   author={Amega, Mike},
   institution={Independent Research},
-  year={2025},
-  url={https://github.com/Volgat/earcp},
-  note={Business Source License 1.1}
+  year={2026},
+  url={https://arxiv.org/abs/2603.14651},
+  note={Dual-licensed: BSL-1.1 for commercial use, 
+        free for academic and non-commercial use. 
+        arXiv:2603.14651}
 }
 ```
 
@@ -309,9 +313,9 @@ developed by Mike Amega (2025). See: https://github.com/Volgat/earcp
 - [x] Comprehensive benchmarking completed
 - [x] Production-grade code with safeguards
 - [x] Business Source License 1.1 applied
-- [ ] PyPI package publication
+- [x] PyPI package publication
 - [ ] Academic paper submission to conference
-- [ ] Extended documentation and tutorials
+- [x] Extended documentation and tutorials
 - [ ] Community extensions and contributions
 
 ### Future Directions
@@ -409,7 +413,7 @@ This repository includes the following for complete IP protection:
 - [x] Business Source License 1.1 applied
 - [x] Citation guidelines
 - [ ] DOI from Zenodo/figshare (recommended)
-- [ ] arXiv submission (recommended within 30 days)
+- [x] arXiv submission (recommended within 30 days)
 
 ---
 
