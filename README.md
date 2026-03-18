@@ -243,13 +243,15 @@ For complete license terms, see [LICENSE.md](LICENSE.md)
 If you use EARCP in academic work, please cite:
 
 ```bibtex
-@article{amega2025earcp,
-  title={EARCP: Ensemble Auto-Régulé par Cohérence et Performance},
+@article{amega2026earcp,
+  title={EARCP: Ensemble Auto-R{\'e}gul{\'e} par Coh{\'e}rence et Performance -- 
+         A Self-Regulating Coherence-Aware Ensemble Architecture 
+         for Sequential Decision Making},
   author={Amega, Mike},
-  journal={arXiv preprint},
-  year={2025},
-  url={https://github.com/Volgat/earcp},
-  note={Prior art established November 13, 2025}
+  journal={arXiv preprint arXiv:2603.14651},
+  year={2026},
+  url={https://arxiv.org/abs/2603.14651},
+  note={Independent Researcher, CA}
 }
 ```
 
@@ -258,13 +260,15 @@ If you use EARCP in academic work, please cite:
 For technical implementations:
 
 ```bibtex
-@techreport{amega2025earcp_tech,
+@techreport{amega2026earcp_tech,
   title={EARCP: Technical Whitepaper and Implementation Specification},
   author={Amega, Mike},
   institution={Independent Research},
-  year={2025},
-  url={https://github.com/Volgat/earcp},
-  note={Business Source License 1.1}
+  year={2026},
+  url={https://arxiv.org/abs/2603.14651},
+  note={Dual-licensed: BSL-1.1 for commercial use, 
+        free for academic and non-commercial use. 
+        arXiv:2603.14651}
 }
 ```
 
