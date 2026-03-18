@@ -313,9 +313,9 @@ developed by Mike Amega (2025). See: https://github.com/Volgat/earcp
 - [x] Comprehensive benchmarking completed
 - [x] Production-grade code with safeguards
 - [x] Business Source License 1.1 applied
-- [ ] PyPI package publication
+- [x] PyPI package publication
 - [ ] Academic paper submission to conference
-- [ ] Extended documentation and tutorials
+- [x] Extended documentation and tutorials
 - [ ] Community extensions and contributions
 
 ### Future Directions
@@ -413,7 +413,7 @@ This repository includes the following for complete IP protection:
 - [x] Business Source License 1.1 applied
 - [x] Citation guidelines
 - [ ] DOI from Zenodo/figshare (recommended)
-- [ ] arXiv submission (recommended within 30 days)
+- [x] arXiv submission
 
 ---
 
