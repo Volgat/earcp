@@ -354,7 +354,7 @@ Contributors will be acknowledged in:
 
 **Mike Amega**  
 Email: mikeamega@yahoo.fr  
-Location: Ontario, Canada  
+Location:CA
 GitHub: [@Volgat](https://github.com/Volgat)
 
 ### For Commercial Licensing Inquiries
